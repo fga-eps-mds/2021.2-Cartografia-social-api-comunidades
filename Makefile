@@ -1,5 +1,8 @@
 run:
-	docker-compose up
+	docker-compose up comunidade-dev
 
 build:
-	docker-compose up --build
+	docker-compose up --build comunidade-dev
+
+debug:
+	docker-compose up --build comunidade-debug

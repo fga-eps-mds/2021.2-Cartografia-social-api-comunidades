@@ -1,9 +1,20 @@
 version: '3.5'
 services:
+  comunidade-debug:
+    build: .
+    volumes: 
+      - .:/var/www/gateway
+    restart: always
+    hostname: comunidade
+    command: npm run start:debug
+    ports: 
+      - 9228:9228
+    env_file:
+      - .env
+    networks:
+      - backend
   comunidade-dev:
-    build: 
-      context: .
-      dockerfile: dev.Dockerfile
+    build: .
     volumes: 
       - .:/var/www/gateway
     restart: always
