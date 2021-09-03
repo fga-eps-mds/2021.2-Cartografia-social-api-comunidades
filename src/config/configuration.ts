@@ -7,6 +7,9 @@ export class ConfigService {
       queueName: process.env.RABBIT_QUEUE_NAME,
       host: process.env.RABBIT_HOST,
     };
+    this.envConfig.mongo = {
+      url: process.env.MONGO_URL,
+    };
   }
 
   get(key: string): any {

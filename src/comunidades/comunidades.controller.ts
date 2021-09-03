@@ -25,7 +25,10 @@ export class ComunidadesController {
 
   @MessagePattern('updateComunidade')
   update(@Payload() updateComunidadeDto: UpdateComunidadeDto) {
-    return this.comunidadesService.update(updateComunidadeDto.id, updateComunidadeDto);
+    return this.comunidadesService.update(
+      updateComunidadeDto.id,
+      updateComunidadeDto,
+    );
   }
 
   @MessagePattern('removeComunidade')
