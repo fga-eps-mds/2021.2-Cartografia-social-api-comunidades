@@ -1,7 +1,11 @@
 version: '3.5'
 services:
-  comunidade:
-    build: .
+  comunidade-dev:
+    build: 
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes: 
+      - .:/var/www/gateway
     restart: always
     hostname: comunidade
     env_file:
