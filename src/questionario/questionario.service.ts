@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuestionarioDto } from './dto/create-questionario.dto';
-import { UpdateQuestionarioDto } from './dto/update-questionario.dto';
+import { RpcException } from '@nestjs/microservices';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { SendSurveyAnswersDto } from './dto/sendSurveyAsnwers.dto';
+import { QuestionDocument } from './entities/questionario.schema';
+import {
+  SurveyResponse,
+  SurveyResponseDocument,
+} from './entities/survey_response.schema';
 
 @Injectable()
 export class QuestionarioService {
-  create(createQuestionarioDto: CreateQuestionarioDto) {
-    return 'This action adds a new questionario';
+  constructor(
+    @InjectModel(SurveyResponse.name)
+    private answerModel: Model<SurveyResponseDocument>,
+
+    @InjectModel('surveyQuestions')
+    private questionModel: Model<QuestionDocument>,
+  ) {}
+
+  async saveAnswer(sendAnswers: SendSurveyAnswersDto) {
+    const answer = new this.answerModel(sendAnswers);
+
+    try {
+      return await answer.save();
+    } catch (err) {
+      throw new RpcException(err.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all questionario`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} questionario`;
-  }
-
-  update(id: number, updateQuestionarioDto: UpdateQuestionarioDto) {
-    return `This action updates a #${id} questionario`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} questionario`;
+  async getQuestionsToCreateCommunity() {
+    return await this.questionModel.find({});
   }
 }
