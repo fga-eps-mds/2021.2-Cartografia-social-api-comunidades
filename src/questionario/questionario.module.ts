@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { QuestionarioService } from './questionario.service';
-import { QuestionarioController } from './questionario.controller';
+import { QuestionService } from './questionario.service';
+import { QuestionController } from './questionario.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   SurveyResponse,
@@ -15,7 +15,7 @@ import { QuestionSchema } from './entities/questionario.schema';
       { name: 'surveyQuestions', schema: QuestionSchema },
     ]),
   ],
-  controllers: [QuestionarioController],
-  providers: [QuestionarioService],
+  controllers: [QuestionController],
+  providers: [QuestionService],
 })
 export class QuestionarioModule {}

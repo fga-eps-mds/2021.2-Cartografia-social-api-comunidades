@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { SendSurveyAnswersDto } from './dto/sendSurveyAsnwers.dto';
 import { QuestionDocument } from './entities/questionario.schema';
 import {
@@ -10,7 +10,7 @@ import {
 } from './entities/survey_response.schema';
 
 @Injectable()
-export class QuestionarioService {
+export class QuestionService {
   constructor(
     @InjectModel(SurveyResponse.name)
     private answerModel: Model<SurveyResponseDocument>,
