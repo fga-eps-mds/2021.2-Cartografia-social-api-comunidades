@@ -80,7 +80,7 @@
       "/src/main.ts",
       "/src/config/configuration.ts"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   }
 }
