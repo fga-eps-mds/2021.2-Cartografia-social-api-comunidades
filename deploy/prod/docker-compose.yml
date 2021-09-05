@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  comunidade-debug:
+    build:
+      context: ../../
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env.prod
+    command: npm run start:prod
+    networks:
+      - backend
+      
+networks:
+  backend:
+    external:
+      name: cartografia-network
