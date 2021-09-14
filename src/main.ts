@@ -27,6 +27,8 @@ async function bootstrap() {
     },
   );
 
-  await app.listen();
+  await app
+    .listen()
+    .then(() => console.log('Microserviço de Comunidades em execução!!'));
 }
 bootstrap();
