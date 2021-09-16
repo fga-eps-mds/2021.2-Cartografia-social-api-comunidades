@@ -31,6 +31,13 @@ export class QuestionService {
 
   async getQuestionsToCreateCommunity() {
 
-    return await this.questionModel.find({ 'formName': 'createComunityForm' });;
+    return this.questionModel.find({ 'formName': 'createCommunity' });;
   }
+
+  async getHelpQuestions() {
+
+    return this.questionModel.find({ 'formName': 'getHelpForm' });;
+  }
+
+
 }
