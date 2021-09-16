@@ -17,7 +17,7 @@ export class ComunidadesService {
     const community = new this.communityModel(communityData);
 
     try {
-      return community.save();
+      return await community.save();
     } catch (err) {
       throw new MicrosserviceException(err.message, HttpStatus.BAD_REQUEST);
     }

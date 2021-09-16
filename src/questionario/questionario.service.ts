@@ -23,7 +23,7 @@ export class QuestionService {
     const answer = new this.answerModel(sendAnswers);
 
     try {
-      return answer.save();
+      return await answer.save();
     } catch (err) {
       throw new RpcException(err.message);
     }
