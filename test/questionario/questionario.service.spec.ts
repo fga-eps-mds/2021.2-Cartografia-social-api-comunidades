@@ -24,8 +24,18 @@ describe('QuestionService', () => {
         {
           provide: getModelToken('surveyQuestions'),
           useValue: {
-            find: () => {
-              return [{ _id: '123123', question: 'Nome' }];
+            find: (data) => {
+              // data == { 'formName': 'createCommunity' }
+              let questions = [
+                { _id: '1', question: 'Nome', formName: 'createCommunity' },
+                { _id: '2', question: 'Nome', formName: 'getHelpForm' }
+              ]
+
+              let found = questions.filter((element) => {
+                return element['formName'] === data['formName'];
+              });
+
+              return found;
             },
           },
         },
@@ -56,12 +66,15 @@ describe('QuestionService', () => {
     expect(await service.saveAnswer(answerData)).toStrictEqual(answerData);
   });
 
-  it('should return questions', async () => {
+  it('should return create community questions', async () => {
     expect(await service.getQuestionsToCreateCommunity()).toStrictEqual([
-      {
-        _id: '123123',
-        question: 'Nome',
-      },
+      { _id: '1', question: 'Nome', formName: 'createCommunity' },
+    ]);
+  });
+
+  it('should return get help questions', async () => {
+    expect(await service.getHelpQuestions()).toStrictEqual([
+      { _id: '2', question: 'Nome', formName: 'getHelpForm' },
     ]);
   });
 });
