@@ -5,7 +5,7 @@ import { SendSurveyAnswersDto } from './dto/sendSurveyAsnwers.dto';
 
 @Controller()
 export class QuestionController {
-  constructor(private readonly questionService: QuestionService) { }
+  constructor(private readonly questionService: QuestionService) {}
 
   @MessagePattern('sendAnswers')
   async create(@Payload() sendAnswers: SendSurveyAnswersDto) {

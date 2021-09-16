@@ -17,7 +17,7 @@ export class QuestionService {
 
     @InjectModel('surveyQuestions')
     private questionModel: Model<QuestionDocument>,
-  ) { }
+  ) {}
 
   async saveAnswer(sendAnswers: SendSurveyAnswersDto) {
     const answer = new this.answerModel(sendAnswers);
@@ -30,14 +30,10 @@ export class QuestionService {
   }
 
   async getQuestionsToCreateCommunity() {
-
-    return this.questionModel.find({ 'formName': 'createCommunity' });;
+    return this.questionModel.find({ formName: 'createCommunity' });
   }
 
   async getHelpQuestions() {
-
-    return this.questionModel.find({ 'formName': 'getHelpForm' });;
+    return this.questionModel.find({ formName: 'getHelpForm' });
   }
-
-
 }

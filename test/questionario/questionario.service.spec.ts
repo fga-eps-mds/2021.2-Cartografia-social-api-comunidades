@@ -1,7 +1,6 @@
 import { RpcException } from '@nestjs/microservices';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { isRegExp } from 'util/types';
 import { SurveyResponse } from '../../src/questionario/entities/survey_response.schema';
 import { QuestionService } from '../../src/questionario/questionario.service';
 
@@ -12,8 +11,6 @@ describe('QuestionService', () => {
     function mockSurveyResponseModel(dto: any) {
       this.data = dto;
       this.save = () => {
-
-
         if (this.data === null) {
           throw new Error('Field cannot be null');
         }
@@ -34,12 +31,12 @@ describe('QuestionService', () => {
           useValue: {
             find: (data) => {
               // data == { 'formName': 'createCommunity' }
-              let questions = [
+              const questions = [
                 { _id: '1', question: 'Nome', formName: 'createCommunity' },
-                { _id: '2', question: 'Nome', formName: 'getHelpForm' }
-              ]
+                { _id: '2', question: 'Nome', formName: 'getHelpForm' },
+              ];
 
-              let found = questions.filter((element) => {
+              const found = questions.filter((element) => {
                 return element['formName'] === data['formName'];
               });
 
@@ -80,10 +77,8 @@ describe('QuestionService', () => {
     try {
       await service.saveAnswer(answerData);
     } catch (error) {
-
       expect(error).toBeInstanceOf(RpcException);
     }
-
   });
 
   it('should return create community questions', async () => {
