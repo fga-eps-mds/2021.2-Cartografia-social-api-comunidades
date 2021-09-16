@@ -75,6 +75,7 @@
     "coveragePathIgnorePatterns": [
       "/dist/",
       "/test/",
+      "/coverage/",
       ".*\\.module\\.ts$",
       ".eslintrc.js",
       "/src/main.ts",

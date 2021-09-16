@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { MicrosserviceException } from 'src/commons/exceptions/MicrosserviceException';
+import { MicrosserviceException } from '../commons/exceptions/MicrosserviceException';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
