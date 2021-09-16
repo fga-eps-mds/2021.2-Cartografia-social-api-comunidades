@@ -23,13 +23,13 @@ export class QuestionService {
     const answer = new this.answerModel(sendAnswers);
 
     try {
-      return await answer.save();
+      return answer.save();
     } catch (err) {
       throw new RpcException(err.message);
     }
   }
 
   async getQuestionsToCreateCommunity() {
-    return await this.questionModel.find({});
+    return this.questionModel.find({});
   }
 }
