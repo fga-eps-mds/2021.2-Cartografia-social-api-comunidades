@@ -84,4 +84,27 @@ describe('QuestionController', () => {
       questions,
     );
   });
+
+  it('should get help questions', async () => {
+    const questions = [
+      {
+        id: '1',
+        question: 'Nome',
+      },
+      {
+        id: '2',
+        question: 'Comunidade',
+      },
+    ];
+
+    const module = await customModule({
+      getHelpQuestions: () => Promise.resolve(questions),
+    });
+
+    controller = module.get<QuestionController>(QuestionController);
+
+    expect(await controller.getHelpQuestions()).toStrictEqual(
+      questions,
+    );
+  });
 });
