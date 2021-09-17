@@ -1,0 +1,22 @@
+[
+    {
+        "question": "Nome completo",
+        "formName": "getHelpForm"
+    },
+    {
+        "question": "Email",
+        "formName": "getHelpForm"
+    },
+    {
+        "question": "Telefone",
+        "formName": "getHelpForm"
+    },
+    {
+        "question": "Nome da comunidade/povo tradicional/unidade social (nome cadastrado no aplicativo)",
+        "formName": "getHelpForm"
+    },
+    {
+        "question": "Escreva aqui sua dúvida ou comentário",
+        "formName": "getHelpForm"
+    }
+]

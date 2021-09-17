@@ -30,6 +30,10 @@ export class QuestionService {
   }
 
   async getQuestionsToCreateCommunity() {
-    return this.questionModel.find({});
+    return this.questionModel.find({ formName: 'createCommunity' });
+  }
+
+  async getHelpQuestions() {
+    return this.questionModel.find({ formName: 'getHelpForm' });
   }
 }

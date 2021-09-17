@@ -7,6 +7,9 @@ export type QuestionDocument = Question & Document;
 export class Question {
   @Prop()
   question: string;
+
+  @Prop()
+  formName: string;
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);

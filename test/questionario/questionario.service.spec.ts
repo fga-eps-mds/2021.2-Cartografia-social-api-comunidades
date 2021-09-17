@@ -1,3 +1,4 @@
+import { RpcException } from '@nestjs/microservices';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SurveyResponse } from '../../src/questionario/entities/survey_response.schema';
@@ -10,6 +11,10 @@ describe('QuestionService', () => {
     function mockSurveyResponseModel(dto: any) {
       this.data = dto;
       this.save = () => {
+        if (this.data === null) {
+          throw new Error('Field cannot be null');
+        }
+
         return this.data;
       };
     }
@@ -24,8 +29,18 @@ describe('QuestionService', () => {
         {
           provide: getModelToken('surveyQuestions'),
           useValue: {
-            find: () => {
-              return [{ _id: '123123', question: 'Nome' }];
+            find: (data) => {
+              // data == { 'formName': 'createCommunity' }
+              const questions = [
+                { _id: '1', question: 'Nome', formName: 'createCommunity' },
+                { _id: '2', question: 'Nome', formName: 'getHelpForm' },
+              ];
+
+              const found = questions.filter((element) => {
+                return element['formName'] === data['formName'];
+              });
+
+              return found;
             },
           },
         },
@@ -56,12 +71,25 @@ describe('QuestionService', () => {
     expect(await service.saveAnswer(answerData)).toStrictEqual(answerData);
   });
 
-  it('should return questions', async () => {
+  it('should raise exception', async () => {
+    const answerData = null;
+
+    try {
+      await service.saveAnswer(answerData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(RpcException);
+    }
+  });
+
+  it('should return create community questions', async () => {
     expect(await service.getQuestionsToCreateCommunity()).toStrictEqual([
-      {
-        _id: '123123',
-        question: 'Nome',
-      },
+      { _id: '1', question: 'Nome', formName: 'createCommunity' },
+    ]);
+  });
+
+  it('should return get help questions', async () => {
+    expect(await service.getHelpQuestions()).toStrictEqual([
+      { _id: '2', question: 'Nome', formName: 'getHelpForm' },
     ]);
   });
 });

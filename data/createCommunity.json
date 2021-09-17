@@ -1,0 +1,90 @@
+[
+    {
+        "question": "Nome da comunidade",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Município",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Estado",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Há quanto tempo a comunidade existe?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quais são as características do território? (Localizado em área montanhosa? Área de floresta/plantação? É banhado por algum curso d’água? Alguma unidade de conservação?...)",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Qual é a área aproximada do território?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "O que existe de infraestrutura na comunidade?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quantas famílias vivem na comunidade?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Existe uma liderança tradicional?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Existe alguma organização representativa da comunidade? (associação, cooperativa, coletivo, movimento).",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Se sim, qual o nome da organização? Quando ela foi criada?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Qual é o CNPJ da associação, caso seja registrada em cartório?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quais são as formas de uso da terra/território?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quais são as formas de produção?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quais são as fontes de renda das famílias na comunidade?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Quais conflitos são enfrentados pela comunidade?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Desde quando os conflitos ocorrem?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Há histórico de vítimas?",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Nome completo",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Telefone",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Email",
+        "formName": "createCommunity"
+    },
+    {
+        "question": "Função na comunidade",
+        "formName": "createCommunity"
+    }
+]
