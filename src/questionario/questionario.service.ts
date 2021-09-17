@@ -30,6 +30,6 @@ export class QuestionService {
   }
 
   async getQuestionsToCreateCommunity() {
-    return await this.questionModel.find({});
+    return this.questionModel.find({});
   }
 }
