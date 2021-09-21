@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Community } from '../../src/comunidades/entities/comunidade.schema';
 import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { MicrosserviceException } from '../../src/commons/exceptions/MicrosserviceException';
+import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
@@ -14,6 +15,10 @@ describe('ComunidadesService', () => {
         {
           provide: getModelToken(Community.name),
           useValue: fn,
+        },
+        {
+          provide: getModelToken(UserRelation.name),
+          useValue: jest.fn(),
         },
       ],
     }).compile();

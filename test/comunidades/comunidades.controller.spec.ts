@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import { Community } from '../../src/comunidades/entities/comunidade.schema';
 import { ComunidadesController } from '../../src/comunidades/comunidades.controller';
 import { ComunidadesService } from '../../src/comunidades/comunidades.service';
+import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 
 describe('ComunidadesController', () => {
   let controller: ComunidadesController;
@@ -16,6 +17,10 @@ describe('ComunidadesController', () => {
         },
         {
           provide: getModelToken(Community.name),
+          useValue: jest.fn(),
+        },
+        {
+          provide: getModelToken(UserRelation.name),
           useValue: jest.fn(),
         },
       ],
