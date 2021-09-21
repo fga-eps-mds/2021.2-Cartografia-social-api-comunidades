@@ -80,7 +80,7 @@ export class ComunidadesService {
   }
 
   async getCommunityUser(communityUser: CommunityUserDto) {
-    const communityUserDoc = await this.userRelationModel.findOne({
+    const communityUserDoc = this.userRelationModel.findOne({
       communityId: communityUser.communityId,
       userId: communityUser.userId,
     });

@@ -39,7 +39,7 @@ export class ComunidadesController {
 
   @MessagePattern('getUsers')
   async getUsers(@Payload() communityId: string) {
-    return await this.comunidadesService.getUsers(communityId);
+    return this.comunidadesService.getUsers(communityId);
   }
 
   @MessagePattern('getCommunityUser')
@@ -49,11 +49,11 @@ export class ComunidadesController {
 
   @MessagePattern('addUser')
   async addUser(@Payload() communityUser: CommunityUserDto) {
-    return await this.comunidadesService.addUser(communityUser);
+    return this.comunidadesService.addUser(communityUser);
   }
 
   @MessagePattern('removeUser')
   async removeUser(@Payload() communityUser: CommunityUserDto) {
-    return await this.comunidadesService.removeUser(communityUser);
+    return this.comunidadesService.removeUser(communityUser);
   }
 }
