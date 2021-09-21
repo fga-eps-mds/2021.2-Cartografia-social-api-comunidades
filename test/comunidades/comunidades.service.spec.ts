@@ -165,4 +165,44 @@ describe('ComunidadesService', () => {
     service = module.get<ComunidadesService>(ComunidadesService);
     expect(await service.destroy('123')).toBeUndefined();
   });
+
+  it('should get users from a community', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+      delete: () => undefined,
+    };
+
+    const userRelations: any = [
+      {
+        id: '1',
+        userId: '1234',
+        communityId: '123',
+      },
+      {
+        id: '2',
+        userId: '1235',
+        communityId: '123',
+      },
+      {
+        id: '3',
+        userId: '1236',
+        communityId: '123',
+      },
+    ];
+
+    const module: TestingModule = await customModule({
+      getUsers: (communityId: string) => {
+        return userRelations.filter((element) => {
+          return element.communityId == communityId;
+        });
+      },
+      findById: () => community,
+    });
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+    expect(await service.getUsers('123')).toStrictEqual(userRelations);
+  });
 });
