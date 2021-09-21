@@ -5,13 +5,19 @@ import { MicrosserviceException } from '../commons/exceptions/MicrosserviceExcep
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
+import {
+  UserRelation,
+  UserRelationDocument,
+} from './entities/userRelation.schema';
 
 @Injectable()
 export class ComunidadesService {
   constructor(
     @InjectModel(Community.name)
     private communityModel: Model<CommunityDocument>,
-  ) {}
+    @InjectModel(UserRelation.name)
+    private userRelationModel: Model<UserRelationDocument>,
+  ) { }
 
   async create(communityData: CreateCommunityDto) {
     const community = new this.communityModel(communityData);
@@ -50,5 +56,34 @@ export class ComunidadesService {
       );
 
     return community;
+  }
+
+  async getUsers(communityId: string) {
+    const community = await this.getById(communityId);
+
+    return this.userRelationModel.find({ communityId: community.id });
+  }
+
+  async addUser(userId: string, communityId: string) {
+    // don't catch and rethrow exception here, as the intention is
+    // to let it go back to the gateway
+    const community = await this.getById(communityId);
+
+    const relation = new this.userRelationModel();
+    relation.communityId = community.id;
+    relation.userId = userId;
+
+    try {
+      return await relation.save();
+    } catch (err) {
+      throw new MicrosserviceException(err.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async removeUser(userId: string, communityId: string) {
+    return await this.userRelationModel.findOneAndDelete({
+      userId: userId,
+      communityId: communityId,
+    });
   }
 }

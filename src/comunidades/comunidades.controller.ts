@@ -35,4 +35,19 @@ export class ComunidadesController {
 
     return true;
   }
+
+  @MessagePattern('getUsers')
+  async getUsers(@Payload() communityId: string) {
+    return await this.comunidadesService.getUsers(communityId);
+  }
+
+  @MessagePattern('addUser')
+  async addUser(@Payload() userId: string, @Payload() communityId: string) {
+    return await this.comunidadesService.addUser(userId, communityId);
+  }
+
+  @MessagePattern('removeUser')
+  async removeUser(@Payload() userId: string, @Payload() communityId: string) {
+    return await this.comunidadesService.removeUser(userId, communityId);
+  }
 }
