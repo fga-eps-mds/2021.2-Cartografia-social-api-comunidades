@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MicrosserviceException } from '../commons/exceptions/MicrosserviceException';
+import { CommunityUserDto } from './dto/communityUser.dto';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
@@ -17,7 +18,7 @@ export class ComunidadesService {
     private communityModel: Model<CommunityDocument>,
     @InjectModel(UserRelation.name)
     private userRelationModel: Model<UserRelationDocument>,
-  ) { }
+  ) {}
 
   async create(communityData: CreateCommunityDto) {
     const community = new this.communityModel(communityData);
@@ -64,14 +65,12 @@ export class ComunidadesService {
     return this.userRelationModel.find({ communityId: community.id });
   }
 
-  async addUser(userId: string, communityId: string) {
+  async addUser(communityUser: CommunityUserDto) {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
-    const community = await this.getById(communityId);
+    await this.getById(communityUser.communityId);
 
-    const relation = new this.userRelationModel();
-    relation.communityId = community.id;
-    relation.userId = userId;
+    const relation = new this.userRelationModel(communityUser);
 
     try {
       return await relation.save();
@@ -80,10 +79,24 @@ export class ComunidadesService {
     }
   }
 
-  async removeUser(userId: string, communityId: string) {
-    return await this.userRelationModel.findOneAndDelete({
-      userId: userId,
-      communityId: communityId,
+  async getCommunityUser(communityUser: CommunityUserDto) {
+    const communityUserDoc = await this.userRelationModel.findOne({
+      communityId: communityUser.communityId,
+      userId: communityUser.userId,
     });
+
+    if (!communityUserDoc)
+      throw new MicrosserviceException(
+        'usuário da comunidade não encontrado',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityUserDoc;
+  }
+
+  async removeUser(communityUser: CommunityUserDto) {
+    const communityUserDoc = await this.getCommunityUser(communityUser);
+
+    return await communityUserDoc.delete();
   }
 }

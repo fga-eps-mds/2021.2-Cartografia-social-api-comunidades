@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ComunidadesService } from './comunidades.service';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
+import { CommunityUserDto } from './dto/communityUser.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 
 @Controller()
@@ -41,13 +42,18 @@ export class ComunidadesController {
     return await this.comunidadesService.getUsers(communityId);
   }
 
+  @MessagePattern('getCommunityUser')
+  async getCommunityUser(@Payload() communityUser: CommunityUserDto) {
+    return this.comunidadesService.getCommunityUser(communityUser);
+  }
+
   @MessagePattern('addUser')
-  async addUser(@Payload() userId: string, @Payload() communityId: string) {
-    return await this.comunidadesService.addUser(userId, communityId);
+  async addUser(@Payload() communityUser: CommunityUserDto) {
+    return await this.comunidadesService.addUser(communityUser);
   }
 
   @MessagePattern('removeUser')
-  async removeUser(@Payload() userId: string, @Payload() communityId: string) {
-    return await this.comunidadesService.removeUser(userId, communityId);
+  async removeUser(@Payload() communityUser: CommunityUserDto) {
+    return await this.comunidadesService.removeUser(communityUser);
   }
 }
