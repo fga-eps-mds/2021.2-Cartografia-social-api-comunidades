@@ -8,24 +8,24 @@ import { UserRelation } from '../../src/comunidades/entities/userRelation.schema
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
 
-  const customModule = (fn: any) => {
+  const customModule = (fnCommunity: any, fnUserRelation: any) => {
     return Test.createTestingModule({
       providers: [
         ComunidadesService,
         {
           provide: getModelToken(Community.name),
-          useValue: fn,
+          useValue: fnCommunity,
         },
         {
           provide: getModelToken(UserRelation.name),
-          useValue: jest.fn(),
+          useValue: fnUserRelation,
         },
       ],
     }).compile();
   };
 
   it('should be defined', async () => {
-    const module: TestingModule = await customModule(jest.fn());
+    const module: TestingModule = await customModule(jest.fn(), jest.fn());
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
@@ -42,6 +42,7 @@ describe('ComunidadesService', () => {
           return this.data;
         };
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -66,6 +67,7 @@ describe('ComunidadesService', () => {
         this.data = dto;
         this.save = () => new Error('erro');
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -98,9 +100,12 @@ describe('ComunidadesService', () => {
       },
     };
 
-    const module: TestingModule = await customModule({
-      findById: () => community,
-    });
+    const module: TestingModule = await customModule(
+      {
+        findById: () => community,
+      },
+      jest.fn(),
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
@@ -126,9 +131,12 @@ describe('ComunidadesService', () => {
       imageUrl: null,
     };
 
-    const module: TestingModule = await customModule({
-      findById: () => community,
-    });
+    const module: TestingModule = await customModule(
+      {
+        findById: () => community,
+      },
+      jest.fn(),
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
@@ -136,9 +144,12 @@ describe('ComunidadesService', () => {
   });
 
   it('should fail to get a community', async () => {
-    const module: TestingModule = await customModule({
-      findById: () => undefined,
-    });
+    const module: TestingModule = await customModule(
+      {
+        findById: () => undefined,
+      },
+      jest.fn(),
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
@@ -158,51 +169,38 @@ describe('ComunidadesService', () => {
       delete: () => undefined,
     };
 
-    const module: TestingModule = await customModule({
-      findById: () => community,
-    });
+    const module: TestingModule = await customModule(
+      {
+        findById: () => community,
+      },
+      jest.fn(),
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
     expect(await service.destroy('123')).toBeUndefined();
   });
 
-  it('should get users from a community', async () => {
-    const community = {
-      id: '123',
-      name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
-      delete: () => undefined,
+  it('should delete a user from community', async () => {
+    const userRelation = {
+      id: '1',
+      userId: '1236',
+      communityId: '123',
+      delete: async () => undefined,
     };
 
-    const userRelations: any = [
+    const module: TestingModule = await customModule(
       {
-        id: '1',
-        userId: '1234',
-        communityId: '123',
+        getCommunityUser: async () => userRelation,
       },
       {
-        id: '2',
-        userId: '1235',
-        communityId: '123',
+        findOne: async () => userRelation,
       },
-      {
-        id: '3',
-        userId: '1236',
-        communityId: '123',
-      },
-    ];
-
-    const module: TestingModule = await customModule({
-      getUsers: (communityId: string) => {
-        return userRelations.filter((element) => {
-          return element.communityId == communityId;
-        });
-      },
-      findById: () => community,
-    });
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
-    expect(await service.getUsers('123')).toStrictEqual(userRelations);
+
+    expect(
+      await service.removeUser({ userId: '1236', communityId: '123' }),
+    ).toBeUndefined();
   });
 });
