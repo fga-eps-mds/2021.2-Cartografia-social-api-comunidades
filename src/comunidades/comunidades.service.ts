@@ -97,6 +97,6 @@ export class ComunidadesService {
   async removeUser(communityUser: CommunityUserDto) {
     const communityUserDoc = await this.getCommunityUser(communityUser);
 
-    return await communityUserDoc.delete();
+    return communityUserDoc.delete();
   }
 }
