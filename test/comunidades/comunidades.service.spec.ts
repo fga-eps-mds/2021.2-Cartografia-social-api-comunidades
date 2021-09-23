@@ -65,7 +65,7 @@ describe('ComunidadesService', () => {
     const module: TestingModule = await customModule(
       function mockSurveyResponseModel(dto: any) {
         this.data = dto;
-        this.save = () => new Error('erro');
+        this.save = () => Promise.reject(new Error('erro'));
       },
       jest.fn(),
     );
@@ -202,5 +202,101 @@ describe('ComunidadesService', () => {
     expect(
       await service.removeUser({ userId: '1236', communityId: '123' }),
     ).toBeUndefined();
+  });
+
+  it('should find users from a community', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+    };
+
+    const userRelation = [
+      {
+        id: '1',
+        userId: '1236',
+        communityId: '123',
+      },
+      {
+        id: '3',
+        userId: '1235',
+        communityId: '123',
+      },
+    ];
+
+    const module: TestingModule = await customModule(
+      {
+        findById: () => Promise.resolve(community),
+      },
+      {
+        find: async () => userRelation,
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    expect(await service.getUsers('123')).toStrictEqual(userRelation);
+  });
+
+  it('should create a communityUser', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+    };
+    const id = '321';
+    const userDto = { userId: '1236', communityId: '123' };
+
+    const module: TestingModule = await customModule(
+      {
+        findById: () => Promise.resolve(community),
+      },
+      function mockSurveyResponseModel(dto: any) {
+        this.data = dto;
+        this.save = () => {
+          this.data.id = id;
+          return this.data;
+        };
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    expect(await service.addUser(userDto)).toStrictEqual({
+      userId: '1236',
+      communityId: '123',
+      id,
+    });
+  });
+
+  it('should failt to create a communityUser', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+    };
+
+    const userDto = { userId: '1236', communityId: '123' };
+
+    const module: TestingModule = await customModule(
+      {
+        findById: () => Promise.resolve(community),
+      },
+      function mockSurveyResponseModel(dto: any) {
+        this.data = dto;
+        this.save = () => Promise.reject(new Error('erro'));
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    try {
+      await service.addUser(userDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(MicrosserviceException);
+    }
   });
 });
