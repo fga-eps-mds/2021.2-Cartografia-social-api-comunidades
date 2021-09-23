@@ -103,8 +103,6 @@ describe('QuestionController', () => {
 
     controller = module.get<QuestionController>(QuestionController);
 
-    expect(await controller.getHelpQuestions()).toStrictEqual(
-      questions,
-    );
+    expect(await controller.getHelpQuestions()).toStrictEqual(questions);
   });
 });
