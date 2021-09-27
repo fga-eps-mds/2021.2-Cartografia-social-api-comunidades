@@ -7,7 +7,7 @@ import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 
 @Controller()
 export class ComunidadesController {
-  constructor(private readonly comunidadesService: ComunidadesService) {}
+  constructor(private readonly comunidadesService: ComunidadesService) { }
 
   @MessagePattern('createCommunity')
   async create(@Payload() createCommunity: CreateCommunityDto) {
@@ -55,5 +55,26 @@ export class ComunidadesController {
   @MessagePattern('removeUser')
   async removeUser(@Payload() communityUser: CommunityUserDto) {
     return this.comunidadesService.removeUser(communityUser);
+  }
+
+  @MessagePattern('getAdminUsers')
+  async getAdminUsers(@Payload() communityId: string) {
+    return this.comunidadesService.getAdminUsers(communityId);
+  }
+
+  @MessagePattern('addAdminUser')
+  async addAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    console.log('>>>', communityAdminUser);
+    return this.comunidadesService.addAdminUser(communityAdminUser);
+  }
+
+  @MessagePattern('getCommunityAdminUser')
+  async getCommunityAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    return this.comunidadesService.getCommunityAdminUser(communityAdminUser);
+  }
+
+  @MessagePattern('removeAdminUser')
+  async removeAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    return this.comunidadesService.removeAdminUser(communityAdminUser);
   }
 }
