@@ -10,6 +10,10 @@ import {
   UserRelation,
   UserRelationDocument,
 } from './entities/userRelation.schema';
+import {
+  UserAdminRelation,
+  UserAdminRelationDocument,
+} from './entities/adminUserRelation.schema';
 
 @Injectable()
 export class ComunidadesService {
@@ -18,7 +22,9 @@ export class ComunidadesService {
     private communityModel: Model<CommunityDocument>,
     @InjectModel(UserRelation.name)
     private userRelationModel: Model<UserRelationDocument>,
-  ) {}
+    @InjectModel(UserAdminRelation.name)
+    private userAdminRelationModel: Model<UserAdminRelationDocument>,
+  ) { }
 
   async create(communityData: CreateCommunityDto) {
     const community = new this.communityModel(communityData);
@@ -65,6 +71,12 @@ export class ComunidadesService {
     return this.userRelationModel.find({ communityId: community.id });
   }
 
+  async getAdminUsers(communityId: string) {
+    const community = await this.getById(communityId);
+
+    return this.userAdminRelationModel.find({ communityId: community.id });
+  }
+
   async addUser(communityUser: CommunityUserDto) {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
@@ -98,5 +110,42 @@ export class ComunidadesService {
     const communityUserDoc = await this.getCommunityUser(communityUser);
 
     return communityUserDoc.delete();
+  }
+
+  async addAdminUser(communityAdminUser: CommunityUserDto) {
+    // don't catch and rethrow exception here, as the intention is
+    // to let it go back to the gateway
+    await this.getById(communityAdminUser.communityId);
+
+    const relation = new this.userAdminRelationModel(communityAdminUser);
+
+    try {
+      return await relation.save();
+    } catch (err) {
+      throw new MicrosserviceException(err.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async getCommunityAdminUser(communityAdminUser: CommunityUserDto) {
+    const communityAdminUserDoc = this.userRelationModel.findOne({
+      communityId: communityAdminUser.communityId,
+      userId: communityAdminUser.userId,
+    });
+
+    if (!communityAdminUserDoc)
+      throw new MicrosserviceException(
+        'usuário adm da comunidade não encontrado',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityAdminUserDoc;
+  }
+
+  async removeAdminUser(communityAdminUser: CommunityUserDto) {
+    const communityAdminUserDoc = await this.getCommunityAdminUser(
+      communityAdminUser,
+    );
+
+    return communityAdminUserDoc.delete();
   }
 }
