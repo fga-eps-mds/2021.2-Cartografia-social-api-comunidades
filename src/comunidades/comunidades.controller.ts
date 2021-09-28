@@ -7,7 +7,7 @@ import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 
 @Controller()
 export class ComunidadesController {
-  constructor(private readonly comunidadesService: ComunidadesService) { }
+  constructor(private readonly comunidadesService: ComunidadesService) {}
 
   @MessagePattern('createCommunity')
   async create(@Payload() createCommunity: CreateCommunityDto) {

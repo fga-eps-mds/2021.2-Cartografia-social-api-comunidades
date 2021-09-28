@@ -7,19 +7,16 @@ import {
   UserRelation,
   UserRelationSchema,
 } from './entities/userRelation.schema';
-import {
-  UserAdminRelation,
-  UserAdminRelationSchema,
-} from './entities/adminUserRelation.schema';
+
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Community.name, schema: CommunitySchema },
       { name: UserRelation.name, schema: UserRelationSchema },
-      { name: UserAdminRelation.name, schema: UserAdminRelationSchema },
+      { name: 'userAdminRelation', schema: UserRelationSchema },
     ]),
   ],
   controllers: [ComunidadesController],
   providers: [ComunidadesService],
 })
-export class ComunidadesModule { }
+export class ComunidadesModule {}

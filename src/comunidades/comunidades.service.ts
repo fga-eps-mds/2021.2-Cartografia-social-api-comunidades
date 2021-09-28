@@ -10,10 +10,6 @@ import {
   UserRelation,
   UserRelationDocument,
 } from './entities/userRelation.schema';
-import {
-  UserAdminRelation,
-  UserAdminRelationDocument,
-} from './entities/adminUserRelation.schema';
 
 @Injectable()
 export class ComunidadesService {
@@ -22,9 +18,9 @@ export class ComunidadesService {
     private communityModel: Model<CommunityDocument>,
     @InjectModel(UserRelation.name)
     private userRelationModel: Model<UserRelationDocument>,
-    @InjectModel(UserAdminRelation.name)
-    private userAdminRelationModel: Model<UserAdminRelationDocument>,
-  ) { }
+    @InjectModel('userAdminRelation')
+    private userAdminRelationModel: Model<UserRelationDocument>,
+  ) {}
 
   async create(communityData: CreateCommunityDto) {
     const community = new this.communityModel(communityData);
