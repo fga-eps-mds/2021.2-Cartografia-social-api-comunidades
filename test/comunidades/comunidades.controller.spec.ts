@@ -23,6 +23,10 @@ describe('ComunidadesController', () => {
           provide: getModelToken(UserRelation.name),
           useValue: jest.fn(),
         },
+        {
+          provide: getModelToken('userAdminRelation'),
+          useValue: jest.fn(),
+        },
       ],
       controllers: [ComunidadesController],
     }).compile();

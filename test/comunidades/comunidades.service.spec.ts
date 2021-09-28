@@ -8,7 +8,11 @@ import { UserRelation } from '../../src/comunidades/entities/userRelation.schema
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
 
-  const customModule = (fnCommunity: any, fnUserRelation: any) => {
+  const customModule = (
+    fnCommunity: any,
+    fnUserRelation: any,
+    fnUserAdminRelation: any,
+  ) => {
     return Test.createTestingModule({
       providers: [
         ComunidadesService,
@@ -20,12 +24,20 @@ describe('ComunidadesService', () => {
           provide: getModelToken(UserRelation.name),
           useValue: fnUserRelation,
         },
+        {
+          provide: getModelToken('userAdminRelation'),
+          useValue: fnUserAdminRelation,
+        },
       ],
     }).compile();
   };
 
   it('should be defined', async () => {
-    const module: TestingModule = await customModule(jest.fn(), jest.fn());
+    const module: TestingModule = await customModule(
+      jest.fn(),
+      jest.fn(),
+      jest.fn(),
+    );
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
@@ -42,6 +54,7 @@ describe('ComunidadesService', () => {
           return this.data;
         };
       },
+      jest.fn(),
       jest.fn(),
     );
 
@@ -67,6 +80,7 @@ describe('ComunidadesService', () => {
         this.data = dto;
         this.save = () => Promise.reject(new Error('erro'));
       },
+      jest.fn(),
       jest.fn(),
     );
 
@@ -105,6 +119,7 @@ describe('ComunidadesService', () => {
         findById: () => community,
       },
       jest.fn(),
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -136,6 +151,7 @@ describe('ComunidadesService', () => {
         findById: () => community,
       },
       jest.fn(),
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -148,6 +164,7 @@ describe('ComunidadesService', () => {
       {
         findById: () => undefined,
       },
+      jest.fn(),
       jest.fn(),
     );
 
@@ -174,6 +191,7 @@ describe('ComunidadesService', () => {
         findById: () => community,
       },
       jest.fn(),
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -195,6 +213,7 @@ describe('ComunidadesService', () => {
       {
         findOne: async () => userRelation,
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -232,6 +251,7 @@ describe('ComunidadesService', () => {
       {
         find: async () => userRelation,
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -260,6 +280,7 @@ describe('ComunidadesService', () => {
           return this.data;
         };
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -289,6 +310,7 @@ describe('ComunidadesService', () => {
         this.data = dto;
         this.save = () => Promise.reject(new Error('erro'));
       },
+      jest.fn(),
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
