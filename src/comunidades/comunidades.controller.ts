@@ -64,7 +64,6 @@ export class ComunidadesController {
 
   @MessagePattern('addAdminUser')
   async addAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
-    console.log('>>>', communityAdminUser);
     return this.comunidadesService.addAdminUser(communityAdminUser);
   }
 

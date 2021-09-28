@@ -108,7 +108,6 @@ export class ComunidadesService {
 
   async removeUser(communityUser: CommunityUserDto) {
     const communityUserDoc = await this.getCommunityUser(communityUser);
-
     return communityUserDoc.delete();
   }
 
@@ -127,7 +126,7 @@ export class ComunidadesService {
   }
 
   async getCommunityAdminUser(communityAdminUser: CommunityUserDto) {
-    const communityAdminUserDoc = this.userRelationModel.findOne({
+    const communityAdminUserDoc = this.userAdminRelationModel.findOne({
       communityId: communityAdminUser.communityId,
       userId: communityAdminUser.userId,
     });
