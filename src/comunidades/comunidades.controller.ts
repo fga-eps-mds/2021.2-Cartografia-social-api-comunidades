@@ -56,4 +56,24 @@ export class ComunidadesController {
   async removeUser(@Payload() communityUser: CommunityUserDto) {
     return this.comunidadesService.removeUser(communityUser);
   }
+
+  @MessagePattern('getAdminUsers')
+  async getAdminUsers(@Payload() communityId: string) {
+    return this.comunidadesService.getAdminUsers(communityId);
+  }
+
+  @MessagePattern('addAdminUser')
+  async addAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    return this.comunidadesService.addAdminUser(communityAdminUser);
+  }
+
+  @MessagePattern('getCommunityAdminUser')
+  async getCommunityAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    return this.comunidadesService.getCommunityAdminUser(communityAdminUser);
+  }
+
+  @MessagePattern('removeAdminUser')
+  async removeAdminUser(@Payload() communityAdminUser: CommunityUserDto) {
+    return this.comunidadesService.removeAdminUser(communityAdminUser);
+  }
 }

@@ -13,6 +13,7 @@ import {
     MongooseModule.forFeature([
       { name: Community.name, schema: CommunitySchema },
       { name: UserRelation.name, schema: UserRelationSchema },
+      { name: 'userAdminRelation', schema: UserRelationSchema },
     ]),
   ],
   controllers: [ComunidadesController],
