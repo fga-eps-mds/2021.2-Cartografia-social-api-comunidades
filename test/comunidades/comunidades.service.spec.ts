@@ -223,6 +223,31 @@ describe('ComunidadesService', () => {
     ).toBeUndefined();
   });
 
+  it('should delete a admin user from community', async () => {
+    const userAdminRelation = {
+      id: '1',
+      userId: '1236',
+      communityId: '123',
+      delete: async () => undefined,
+    };
+
+    const module: TestingModule = await customModule(
+      {
+        getCommunityUser: async () => userAdminRelation,
+      },
+      jest.fn(),
+      {
+        findOne: async () => userAdminRelation,
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    expect(
+      await service.removeAdminUser({ userId: '1236', communityId: '123' }),
+    ).toBeUndefined();
+  });
+
   it('should find users from a community', async () => {
     const community = {
       id: '123',
@@ -257,6 +282,42 @@ describe('ComunidadesService', () => {
     service = module.get<ComunidadesService>(ComunidadesService);
 
     expect(await service.getUsers('123')).toStrictEqual(userRelation);
+  });
+
+  it('should find admin users from a community', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+    };
+
+    const userAdminRelation = [
+      {
+        id: '1',
+        userId: '1236',
+        communityId: '123',
+      },
+      {
+        id: '3',
+        userId: '1235',
+        communityId: '123',
+      },
+    ];
+
+    const module: TestingModule = await customModule(
+      {
+        findById: () => Promise.resolve(community),
+      },
+      jest.fn(),
+      {
+        find: async () => userAdminRelation,
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    expect(await service.getAdminUsers('123')).toStrictEqual(userAdminRelation);
   });
 
   it('should create a communityUser', async () => {
@@ -317,6 +378,78 @@ describe('ComunidadesService', () => {
 
     try {
       await service.addUser(userDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(MicrosserviceException);
+    }
+  });
+
+  it('should failt to create a communityAdminUser', async () => {
+    const community = {
+      id: '123',
+      name: 'Por do sol',
+      description: 'Comunidade pôr do sol',
+      imageUrl: null,
+    };
+
+    const userDto = { userId: '1236', communityId: '123' };
+
+    const module: TestingModule = await customModule(
+      {
+        findById: () => Promise.resolve(community),
+      },
+      jest.fn(),
+      function mockSurveyResponseModel(dto: any) {
+        this.data = dto;
+        this.save = () => Promise.reject(new Error('erro'));
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    try {
+      await service.addAdminUser(userDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(MicrosserviceException);
+    }
+  });
+
+  it('should throw an exception on getCommunityUser', async () => {
+
+    const userDto = { userId: '1236', communityId: '123' };
+
+    const module: TestingModule = await customModule(
+      jest.fn(),
+      {
+        findOne: () => undefined,
+      },
+      jest.fn(),
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    try {
+      await service.getCommunityUser(userDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(MicrosserviceException);
+    }
+  });
+
+  it('should throw an exception on getCommunityAdminUser', async () => {
+
+    const userDto = { userId: '1236', communityId: '123' };
+
+    const module: TestingModule = await customModule(
+      jest.fn(),
+      jest.fn(),
+      {
+        findOne: () => undefined,
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    try {
+      await service.getCommunityAdminUser(userDto);
     } catch (error) {
       expect(error).toBeInstanceOf(MicrosserviceException);
     }
