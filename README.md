@@ -16,28 +16,34 @@ Repositório do microsserviço de comunidades do projeto da Cartografia social
 
 ## [**Dependências**](#Sumário)
 
-Para a execução local da Wiki do projeto serão necessárias as seguintes dependências:
+Para a execução local da aplicação será necessário ter instaladas as seguintes ferramentas:
 
-* [NodeJs](https://nodejs.org/en/)
-* [VSCode](https://code.visualstudio.com/) (Opcional)
+* [Npm](https://docs.npmjs.com/getting-started)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## [**Execução**](#Sumário)
+### Faça um clone do repositório
 
 ```bash
+$ git clone https://github.com/fga-eps-mds/2021.1-Cartografia-social-api-comunidades
+```
+
+### Instalando as dependências
+
+```bash
+$ cd 2021.1-Cartografia-social-api-comunidades
 $ npm install
 ```
 
-### Running the app
+### Executando a aplicação
+Escolha um dos ambientes para a execução
 
 ```bash
-# development
-$ npm run start
+# development ambient
+$ docker-compose up comunidade-dev
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# debug ambient
+$ docker-compose up comunidade-debug
 ```
 
 ### Test
