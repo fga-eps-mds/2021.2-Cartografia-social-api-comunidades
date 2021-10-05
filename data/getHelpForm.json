@@ -1,22 +1,47 @@
 [
     {
         "question": "Nome completo",
-        "formName": "getHelpForm"
+        "formName": "getHelpForm",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "/^.{1,}$/",
+        "errorMessage": "O campo não pode estar em branco",
+        "orderInForm": "1"
     },
     {
-        "question": "Email",
-        "formName": "getHelpForm"
+        "question": "Email para contato",
+        "formName": "getHelpForm",
+        "fieldType": "textField",
+        "placeholder": "email@email.com.br",
+        "validationRegex": "/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
+        "errorMessage": "Email inválido",
+        "orderInForm": "2"
     },
     {
-        "question": "Telefone",
-        "formName": "getHelpForm"
+        "question": "Telefone para contato",
+        "formName": "getHelpForm",
+        "fieldType": "textField",
+        "placeholder": "(XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX",
+        "validationRegex": "^\\(?\\d{2}\\)?[\\s-]?[\\s9]?\\d{4}-?\\d{4}$",
+        "errorMessage": "Formato do telefone está inválido (Formato esperado: (XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX)",
+        "orderInForm": "3"
     },
     {
         "question": "Nome da comunidade/povo tradicional/unidade social (nome cadastrado no aplicativo)",
-        "formName": "getHelpForm"
+        "formName": "getHelpForm",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "/^.{1,}$/",
+        "errorMessage": "O campo não pode estar em branco",
+        "orderInForm": "4"
     },
     {
         "question": "Escreva aqui sua dúvida ou comentário",
-        "formName": "getHelpForm"
+        "formName": "getHelpForm",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "/^.{1,}$/",
+        "errorMessage": "O campo não pode estar em branco",
+        "orderInForm": "5"
     }
 ]
