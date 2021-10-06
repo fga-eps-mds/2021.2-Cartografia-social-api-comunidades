@@ -29,8 +29,10 @@ export class QuestionService {
     }
   }
 
-  private async getQuestions(formName: string){
-    return this.questionModel.find({ formName: formName });
+  private async getQuestions(formName: string) {
+    return this.questionModel
+      .find({ formName: formName })
+      .sort({ orderInForm: 'ascending' });
   }
 
   async getQuestionsToCreateCommunity() {

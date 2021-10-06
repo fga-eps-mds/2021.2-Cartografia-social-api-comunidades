@@ -1,11 +1,37 @@
 import { RpcException } from '@nestjs/microservices';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Question } from 'src/questionario/entities/questionario.schema';
 import { SurveyResponse } from '../../src/questionario/entities/survey_response.schema';
 import { QuestionService } from '../../src/questionario/questionario.service';
 
 describe('QuestionService', () => {
   let service: QuestionService;
+
+  const defaultData = [
+    {
+      _id: '1',
+      question: 'Nome completo',
+      formName: 'createCommunity',
+      fieldType: 'textField',
+      placeholder: 'Digite sua resposta...',
+      validationRegex: '/^.{1,}$/',
+      errorMessage: 'O campo não pode estar em branco',
+      optional: false,
+      orderInForm: '1',
+    },
+    {
+      _id: '2',
+      question: 'Nome completo',
+      formName: 'getHelpForm',
+      fieldType: 'textField',
+      placeholder: 'Digite sua resposta...',
+      validationRegex: '/^.{1,}$/',
+      errorMessage: 'O campo não pode estar em branco',
+      optional: false,
+      orderInForm: '1',
+    },
+  ];
 
   beforeEach(async () => {
     function mockSurveyResponseModel(dto: any) {
@@ -30,17 +56,14 @@ describe('QuestionService', () => {
           provide: getModelToken('surveyQuestions'),
           useValue: {
             find: (data) => {
-              // data == { 'formName': 'createCommunity' }
-              const questions = [
-                { _id: '1', question: 'Nome', formName: 'createCommunity' },
-                { _id: '2', question: 'Nome', formName: 'getHelpForm' },
-              ];
-
-              const found = questions.filter((element) => {
+              const result = defaultData.filter((element) => {
                 return element['formName'] === data['formName'];
               });
 
-              return found;
+              return {
+                ...result,
+                sort: () => result,
+              };
             },
           },
         },
@@ -83,13 +106,11 @@ describe('QuestionService', () => {
 
   it('should return create community questions', async () => {
     expect(await service.getQuestionsToCreateCommunity()).toStrictEqual([
-      { _id: '1', question: 'Nome', formName: 'createCommunity' },
+      defaultData[0],
     ]);
   });
 
   it('should return get help questions', async () => {
-    expect(await service.getHelpQuestions()).toStrictEqual([
-      { _id: '2', question: 'Nome', formName: 'getHelpForm' },
-    ]);
+    expect(await service.getHelpQuestions()).toStrictEqual([defaultData[1]]);
   });
 });
