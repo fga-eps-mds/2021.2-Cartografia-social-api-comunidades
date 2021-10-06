@@ -1,37 +1,52 @@
 import { RpcException } from '@nestjs/microservices';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Question } from 'src/questionario/entities/questionario.schema';
+import { SendSurveyAnswersDto } from '../../src/questionario/dto/sendSurveyAsnwers.dto';
 import { SurveyResponse } from '../../src/questionario/entities/survey_response.schema';
 import { QuestionService } from '../../src/questionario/questionario.service';
 
 describe('QuestionService', () => {
   let service: QuestionService;
 
-  const defaultData = [
+  const createCommunityQuestions = [
     {
-      _id: '1',
+      id: '1',
       question: 'Nome completo',
       formName: 'createCommunity',
       fieldType: 'textField',
       placeholder: 'Digite sua resposta...',
-      validationRegex: '/^.{1,}$/',
+      validationRegex: '.+',
       errorMessage: 'O campo não pode estar em branco',
       optional: false,
       orderInForm: '1',
     },
     {
-      _id: '2',
+      id: '3',
+      question: 'Idade',
+      formName: 'createCommunity',
+      fieldType: 'textField',
+      placeholder: 'Digite sua resposta...',
+      validationRegex: '.+',
+      errorMessage: 'O campo não pode estar em branco',
+      optional: true,
+      orderInForm: '2',
+    },
+  ];
+  const getHelpQuestions = [
+    {
+      id: '2',
       question: 'Nome completo',
       formName: 'getHelpForm',
       fieldType: 'textField',
       placeholder: 'Digite sua resposta...',
-      validationRegex: '/^.{1,}$/',
+      validationRegex: '.+',
       errorMessage: 'O campo não pode estar em branco',
       optional: false,
       orderInForm: '1',
     },
   ];
+
+  const defaultData = [...createCommunityQuestions, ...getHelpQuestions];
 
   beforeEach(async () => {
     function mockSurveyResponseModel(dto: any) {
@@ -43,6 +58,7 @@ describe('QuestionService', () => {
 
         return this.data;
       };
+      this.answers = dto['answers'];
     }
 
     const module: TestingModule = await Test.createTestingModule({
@@ -65,6 +81,11 @@ describe('QuestionService', () => {
                 sort: () => result,
               };
             },
+            findOne: (data) => {
+              return defaultData.filter((element) => {
+                return element['id'] === data['id'];
+              })[0];
+            },
           },
         },
       ],
@@ -78,15 +99,15 @@ describe('QuestionService', () => {
   });
 
   it('should save answers', async () => {
-    const answerData = {
+    const answerData = <SendSurveyAnswersDto>{
       answers: [
         {
-          questionId: '61328169c8b5720156c6fb1e',
-          response: 'sdfsdfsdf',
+          questionId: '1',
+          response: 'Joao',
         },
         {
-          questionId: '61328169c8b5720156c6fb1e',
-          response: 'sdfsdfsdf',
+          questionId: '2',
+          response: 'Ricardo',
         },
       ],
     };
@@ -94,8 +115,15 @@ describe('QuestionService', () => {
     expect(await service.saveAnswer(answerData)).toStrictEqual(answerData);
   });
 
-  it('should raise exception', async () => {
-    const answerData = null;
+  it('should fail regex', async () => {
+    const answerData = <SendSurveyAnswersDto>{
+      answers: [
+        {
+          questionId: '1',
+          response: '',
+        },
+      ],
+    };
 
     try {
       await service.saveAnswer(answerData);
@@ -104,13 +132,40 @@ describe('QuestionService', () => {
     }
   });
 
+  it('should fail non-optional field validation', async () => {
+    const answerData = <SendSurveyAnswersDto>{
+      answers: [
+        {
+          questionId: '3',
+          response: '25',
+        },
+      ],
+    };
+
+    try {
+      await service.saveAnswer(answerData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(RpcException);
+    }
+  });
+
+  it('should raise exception', async () => {
+    const answerData: SendSurveyAnswersDto = null;
+
+    try {
+      await service.saveAnswer(answerData);
+    } catch (error) {
+      expect(error).toBeInstanceOf(TypeError);
+    }
+  });
+
   it('should return create community questions', async () => {
-    expect(await service.getQuestionsToCreateCommunity()).toStrictEqual([
-      defaultData[0],
-    ]);
+    expect(await service.getQuestionsToCreateCommunity()).toStrictEqual(
+      createCommunityQuestions,
+    );
   });
 
   it('should return get help questions', async () => {
-    expect(await service.getHelpQuestions()).toStrictEqual([defaultData[1]]);
+    expect(await service.getHelpQuestions()).toStrictEqual(getHelpQuestions);
   });
 });

@@ -414,7 +414,6 @@ describe('ComunidadesService', () => {
   });
 
   it('should throw an exception on getCommunityUser', async () => {
-
     const userDto = { userId: '1236', communityId: '123' };
 
     const module: TestingModule = await customModule(
@@ -435,16 +434,11 @@ describe('ComunidadesService', () => {
   });
 
   it('should throw an exception on getCommunityAdminUser', async () => {
-
     const userDto = { userId: '1236', communityId: '123' };
 
-    const module: TestingModule = await customModule(
-      jest.fn(),
-      jest.fn(),
-      {
-        findOne: () => undefined,
-      },
-    );
+    const module: TestingModule = await customModule(jest.fn(), jest.fn(), {
+      findOne: () => undefined,
+    });
 
     service = module.get<ComunidadesService>(ComunidadesService);
 
