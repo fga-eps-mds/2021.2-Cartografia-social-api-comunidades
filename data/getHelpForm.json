@@ -6,6 +6,7 @@
         "placeholder": "Digite sua resposta...",
         "validationRegex": "/^.{1,}$/",
         "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
         "orderInForm": "1"
     },
     {
@@ -15,6 +16,7 @@
         "placeholder": "email@email.com.br",
         "validationRegex": "/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
         "errorMessage": "Email inválido",
+        "optional": false,
         "orderInForm": "2"
     },
     {
@@ -24,6 +26,7 @@
         "placeholder": "(XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX",
         "validationRegex": "^\\(?\\d{2}\\)?[\\s-]?[\\s9]?\\d{4}-?\\d{4}$",
         "errorMessage": "Formato do telefone está inválido (Formato esperado: (XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX)",
+        "optional": false,
         "orderInForm": "3"
     },
     {
@@ -33,6 +36,7 @@
         "placeholder": "Digite sua resposta...",
         "validationRegex": "/^.{1,}$/",
         "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
         "orderInForm": "4"
     },
     {
@@ -42,6 +46,7 @@
         "placeholder": "Digite sua resposta...",
         "validationRegex": "/^.{1,}$/",
         "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
         "orderInForm": "5"
     }
 ]
