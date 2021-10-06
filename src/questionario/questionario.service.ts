@@ -29,11 +29,15 @@ export class QuestionService {
     }
   }
 
+  private async getQuestions(formName: string){
+    return this.questionModel.find({ formName: formName });
+  }
+
   async getQuestionsToCreateCommunity() {
-    return this.questionModel.find({ formName: 'createCommunity' });
+    return this.getQuestions('createCommunity');
   }
 
   async getHelpQuestions() {
-    return this.questionModel.find({ formName: 'getHelpForm' });
+    return this.getQuestions('getHelpForm');
   }
 }
