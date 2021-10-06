@@ -4,7 +4,7 @@
         "formName": "getHelpForm",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "1"
@@ -14,7 +14,7 @@
         "formName": "getHelpForm",
         "fieldType": "textField",
         "placeholder": "email@email.com.br",
-        "validationRegex": "/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
+        "validationRegex": "^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
         "errorMessage": "Email inválido",
         "optional": false,
         "orderInForm": "2"
@@ -34,7 +34,7 @@
         "formName": "getHelpForm",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "4"
@@ -44,7 +44,7 @@
         "formName": "getHelpForm",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "5"

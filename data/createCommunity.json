@@ -3,7 +3,7 @@
         "question": "Nome da comunidade",
         "formName": "createCommunity",
         "fieldType": "textField",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "placeholder": "Insira o nome da comunidade...",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
@@ -13,7 +13,7 @@
         "question": "Município",
         "formName": "createCommunity",
         "fieldType": "textField",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "placeholder": "Município onde está a comunidade...",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
@@ -24,7 +24,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Estado onde está a comunidade...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "3"
@@ -34,7 +34,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "4"
@@ -44,7 +44,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "5"
@@ -54,7 +54,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "6"
@@ -64,7 +64,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "7"
@@ -74,7 +74,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "8"
@@ -84,7 +84,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "9"
@@ -94,7 +94,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "10"
@@ -104,7 +104,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": true,
         "orderInForm": "11"
@@ -114,7 +114,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "XX.XXX.XXX/XXXX-XX",
-        "validationRegex": "/^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$/",
+        "validationRegex": "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$",
         "errorMessage": "Formato de CNPJ inválido (Formato esperado: XX.XXX.XXX/XXXX-XX)",
         "optional": true,
         "orderInForm": "12"
@@ -124,7 +124,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "13"
@@ -134,7 +134,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "14"
@@ -144,7 +144,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "15"
@@ -154,7 +154,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "16"
@@ -164,7 +164,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": true,
         "orderInForm": "17"
@@ -174,7 +174,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "18"
@@ -184,7 +184,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "19"
@@ -204,7 +204,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "email@email.com.br",
-        "validationRegex": "/^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
+        "validationRegex": "^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
         "errorMessage": "Email inválido",
         "optional": false,
         "orderInForm": "21"
@@ -214,7 +214,7 @@
         "formName": "createCommunity",
         "fieldType": "textField",
         "placeholder": "Digite sua resposta...",
-        "validationRegex": "/^.{1,}$/",
+        "validationRegex": "^.{1,}$",
         "errorMessage": "O campo não pode estar em branco",
         "optional": false,
         "orderInForm": "22"
