@@ -2,6 +2,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Test } from '@nestjs/testing';
 import { SendSurveyAnswersDto } from 'src/questionario/dto/sendSurveyAsnwers.dto';
 import { SurveyResponse } from '../../src/questionario/entities/survey_response.schema';
+import { Question } from '../../src/questionario/entities/questionario.schema';
 import { QuestionController } from '../../src/questionario/questionario.controller';
 import { QuestionService } from '../../src/questionario/questionario.service';
 
@@ -20,7 +21,7 @@ describe('QuestionController', () => {
           useValue: jest.fn(),
         },
         {
-          provide: getModelToken('surveyQuestions'),
+          provide: getModelToken(Question.name),
           useValue: jest.fn(),
         },
       ],
