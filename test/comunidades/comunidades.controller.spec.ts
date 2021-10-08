@@ -407,12 +407,12 @@ describe('ComunidadesController', () => {
 
     controller = module.get<ComunidadesController>(ComunidadesController);
 
-    expect(await controller.getCommunityAdminUser(userRelationToFind)).toStrictEqual(
-      {
-        id: '1',
-        userId: '1234',
-        communityId: '4321',
-      },
-    );
+    expect(
+      await controller.getCommunityAdminUser(userRelationToFind),
+    ).toStrictEqual({
+      id: '1',
+      userId: '1234',
+      communityId: '4321',
+    });
   });
 });
