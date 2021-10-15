@@ -4,6 +4,7 @@ import { Community } from '../../src/comunidades/entities/comunidade.schema';
 import { ComunidadesController } from '../../src/comunidades/comunidades.controller';
 import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
+import { User } from '../../src/comunidades/entities/user.schema';
 
 describe('ComunidadesController', () => {
   let controller: ComunidadesController;
@@ -25,6 +26,10 @@ describe('ComunidadesController', () => {
         },
         {
           provide: getModelToken('userAdminRelation'),
+          useValue: jest.fn(),
+        },
+        {
+          provide: getModelToken(User.name),
           useValue: jest.fn(),
         },
       ],

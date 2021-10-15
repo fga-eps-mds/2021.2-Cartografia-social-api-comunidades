@@ -4,6 +4,7 @@ import { Community } from '../../src/comunidades/entities/comunidade.schema';
 import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { MicrosserviceException } from '../../src/commons/exceptions/MicrosserviceException';
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
+import { User } from '../../src/comunidades/entities/user.schema';
 
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
@@ -12,6 +13,7 @@ describe('ComunidadesService', () => {
     fnCommunity: any,
     fnUserRelation: any,
     fnUserAdminRelation: any,
+    fnUser: any = jest.fn(),
   ) => {
     return Test.createTestingModule({
       providers: [
@@ -27,6 +29,10 @@ describe('ComunidadesService', () => {
         {
           provide: getModelToken('userAdminRelation'),
           useValue: fnUserAdminRelation,
+        },
+        {
+          provide: getModelToken(User.name),
+          useValue: fnUser,
         },
       ],
     }).compile();
@@ -213,7 +219,12 @@ describe('ComunidadesService', () => {
       {
         findOne: async () => userRelation,
       },
-      jest.fn(),
+      {
+        findOne: async () => Promise.reject(),
+      },
+      {
+        findOne: jest.fn(),
+      },
     );
 
     service = module.get<ComunidadesService>(ComunidadesService);
@@ -353,7 +364,7 @@ describe('ComunidadesService', () => {
     });
   });
 
-  it('should failt to create a communityUser', async () => {
+  it('should fail to to create a communityUser', async () => {
     const community = {
       id: '123',
       name: 'Por do sol',
@@ -409,7 +420,7 @@ describe('ComunidadesService', () => {
     try {
       await service.addAdminUser(userDto);
     } catch (error) {
-      expect(error).toBeInstanceOf(MicrosserviceException);
+      expect(error).toBeInstanceOf(TypeError);
     }
   });
 
