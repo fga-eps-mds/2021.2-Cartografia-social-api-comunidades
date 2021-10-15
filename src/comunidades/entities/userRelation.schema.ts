@@ -6,7 +6,7 @@ export type UserRelationDocument = UserRelation & Document;
 
 @Schema()
 export class UserRelation {
-  @Prop({ required: true, type: Types.ObjectId, ref: 'users' })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'users', unique: true })
   userId: string;
 
   @Prop({ required: true, type: Types.ObjectId, ref: Community.name })

@@ -6,6 +6,7 @@ import { CommunityUserDto } from './dto/communityUser.dto';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
+import { User, UserDocument } from './entities/user.schema';
 import {
   UserRelation,
   UserRelationDocument,
@@ -20,6 +21,8 @@ export class ComunidadesService {
     private userRelationModel: Model<UserRelationDocument>,
     @InjectModel('userAdminRelation')
     private userAdminRelationModel: Model<UserRelationDocument>,
+    @InjectModel(User.name)
+    private userModel: Model<UserDocument>,
   ) {}
 
   async create(communityData: CreateCommunityDto) {
@@ -88,7 +91,7 @@ export class ComunidadesService {
   }
 
   async getCommunityUser(communityUser: CommunityUserDto) {
-    const communityUserDoc = this.userRelationModel.findOne({
+    const communityUserDoc = await this.userRelationModel.findOne({
       communityId: communityUser.communityId,
       userId: communityUser.userId,
     });
@@ -103,6 +106,13 @@ export class ComunidadesService {
   }
 
   async removeUser(communityUser: CommunityUserDto) {
+    // ignore exception on catch, this happens when user
+    // was not an admin
+
+    try {
+      await this.removeAdminUser(communityUser);
+    } catch {}
+
     const communityUserDoc = await this.getCommunityUser(communityUser);
     return communityUserDoc.delete();
   }
@@ -110,7 +120,7 @@ export class ComunidadesService {
   async addAdminUser(communityAdminUser: CommunityUserDto) {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
-    await this.getById(communityAdminUser.communityId);
+    await this.getCommunityUser(communityAdminUser);
 
     const relation = new this.userAdminRelationModel(communityAdminUser);
 
@@ -136,11 +146,51 @@ export class ComunidadesService {
     return communityAdminUserDoc;
   }
 
+  async getCommunityAdminUserByEmail(userEmail: string) {
+    const user = await this.userModel.findOne({ email: userEmail });
+
+    const communityAdminUserDoc = await this.userAdminRelationModel.findOne({
+      userId: user._id,
+    });
+
+    if (!communityAdminUserDoc)
+      throw new MicrosserviceException(
+        'usuário adm da comunidade não encontrado',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityAdminUserDoc;
+  }
+
   async removeAdminUser(communityAdminUser: CommunityUserDto) {
     const communityAdminUserDoc = await this.getCommunityAdminUser(
       communityAdminUser,
     );
 
     return communityAdminUserDoc.delete();
+  }
+
+  async listCommunities() {
+    return this.communityModel.find({});
+  }
+
+  async listUsers() {
+    return this.userModel.find({});
+  }
+
+  async getUserCommunity(userEmail: string) {
+    const user = await this.userModel.findOne({ email: userEmail });
+
+    const userRelation = await this.userRelationModel.findOne({
+      userId: user._id,
+    });
+
+    if (!userRelation)
+      throw new MicrosserviceException(
+        'Usuário não possui comunidade',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return this.getById(userRelation.communityId.toString());
   }
 }
