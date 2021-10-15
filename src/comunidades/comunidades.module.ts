@@ -7,6 +7,7 @@ import {
   UserRelation,
   UserRelationSchema,
 } from './entities/userRelation.schema';
+import { User, UserSchema } from './entities/user.schema';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import {
       { name: Community.name, schema: CommunitySchema },
       { name: UserRelation.name, schema: UserRelationSchema },
       { name: 'userAdminRelation', schema: UserRelationSchema },
+      { name: User.name, schema: UserSchema },
     ]),
   ],
   controllers: [ComunidadesController],
