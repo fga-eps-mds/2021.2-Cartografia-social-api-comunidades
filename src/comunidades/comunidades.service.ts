@@ -5,6 +5,7 @@ import { MicrosserviceException } from '../commons/exceptions/MicrosserviceExcep
 import { CommunityUserDto } from './dto/communityUser.dto';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
+import { UserDto } from './dto/user.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
 import { User, UserDocument } from './entities/user.schema';
 import {
@@ -192,5 +193,50 @@ export class ComunidadesService {
       );
 
     return this.getById(userRelation.communityId.toString());
+  }
+
+  async getUsersWithouACommunity() {
+    const users: UserDto[] = await this.userModel.aggregate([
+      {
+        $match: {
+          type: '1',
+        },
+      },
+      {
+        $addFields: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'userrelations',
+          localField: 'id',
+          foreignField: 'userId',
+          as: 'community',
+        },
+      },
+      {
+        $match: {
+          community: {
+            $size: 0,
+          },
+        },
+      },
+      {
+        $project: {
+          community: 0,
+        },
+      },
+    ]);
+
+    if (!users.length)
+      throw new MicrosserviceException(
+        'Não há usuários sem comunidades',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return users;
   }
 }

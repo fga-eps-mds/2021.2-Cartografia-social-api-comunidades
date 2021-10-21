@@ -96,4 +96,9 @@ export class ComunidadesController {
   async getCommunityAdminUserByEmail(@Payload() userEmail: string) {
     return this.comunidadesService.getCommunityAdminUserByEmail(userEmail);
   }
+
+  @MessagePattern('getUsersWithouACommunity')
+  async getUsersWithouACommunity() {
+    return this.comunidadesService.getUsersWithouACommunity();
+  }
 }
