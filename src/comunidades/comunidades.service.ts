@@ -121,7 +121,7 @@ export class ComunidadesService {
   async addAdminUser(communityAdminUser: CommunityUserDto) {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
-    await this.getCommunityUser(communityAdminUser);
+    await this.getById(communityAdminUser.communityId);
 
     const relation = new this.userAdminRelationModel(communityAdminUser);
 
