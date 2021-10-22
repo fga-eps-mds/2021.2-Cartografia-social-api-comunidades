@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "amqp-connection-manager": "^3.6.0",
     "amqplib": "^0.8.0",
+    "geojson-to-kml": "^0.0.1",
     "mongoose": "^5.13.8",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

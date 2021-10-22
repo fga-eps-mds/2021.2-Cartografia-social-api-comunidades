@@ -13,6 +13,8 @@ import {
   UserRelationDocument,
 } from './entities/userRelation.schema';
 
+import tokml from 'geojson-to-kml';
+
 @Injectable()
 export class ComunidadesService {
   constructor(
@@ -238,5 +240,15 @@ export class ComunidadesService {
       );
 
     return users;
+  }
+
+  async exportCommunityToKml(communityId: string): Promise<boolean> {
+    const community = await this.getById(communityId);
+
+    const kmlCommunityData = tokml(community, {
+      documentName: `KML-${community.name}`,
+    });
+
+    return kmlCommunityData;
   }
 }
