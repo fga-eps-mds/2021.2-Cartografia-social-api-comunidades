@@ -5,6 +5,7 @@ import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { MicrosserviceException } from '../../src/commons/exceptions/MicrosserviceException';
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 import { User } from '../../src/comunidades/entities/user.schema';
+import { UserDto } from '../../src/comunidades/dto/user.dto';
 
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
@@ -455,6 +456,49 @@ describe('ComunidadesService', () => {
 
     try {
       await service.getCommunityAdminUser(userDto);
+    } catch (error) {
+      expect(error).toBeInstanceOf(MicrosserviceException);
+    }
+  });
+
+  it('should get users', async () => {
+    const userDto = new UserDto();
+
+    userDto.name = 'Teste';
+    userDto.cellPhone = '+55 (61) 99898-9988';
+    userDto.email = 'eeste@teste.com';
+    userDto.id = '123';
+
+    const module: TestingModule = await customModule(
+      jest.fn(),
+      jest.fn(),
+      jest.fn(),
+      {
+        aggregate: () => Promise.resolve([userDto]),
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    const result = await service.getUsersWithouACommunity();
+
+    expect(result.length).toBe(1);
+  });
+
+  it('should not get users', async () => {
+    const module: TestingModule = await customModule(
+      jest.fn(),
+      jest.fn(),
+      jest.fn(),
+      {
+        aggregate: () => Promise.resolve([]),
+      },
+    );
+
+    service = module.get<ComunidadesService>(ComunidadesService);
+
+    try {
+      await service.getUsersWithouACommunity();
     } catch (error) {
       expect(error).toBeInstanceOf(MicrosserviceException);
     }

@@ -5,6 +5,7 @@ import { ComunidadesController } from '../../src/comunidades/comunidades.control
 import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 import { User } from '../../src/comunidades/entities/user.schema';
+import { UserDto } from '../../src/comunidades/dto/user.dto';
 
 describe('ComunidadesController', () => {
   let controller: ComunidadesController;
@@ -419,5 +420,24 @@ describe('ComunidadesController', () => {
       userId: '1234',
       communityId: '4321',
     });
+  });
+
+  it('should update a community', async () => {
+    const userDto = new UserDto();
+
+    userDto.name = 'Teste';
+    userDto.cellPhone = '+55 (61) 99898-9988';
+    userDto.email = 'eeste@teste.com';
+    userDto.id = '123';
+
+    const module = await customModule({
+      getUsersWithouACommunity: () => [userDto],
+    });
+
+    controller = module.get<ComunidadesController>(ComunidadesController);
+
+    expect(await controller.getUsersWithouACommunity()).toStrictEqual([
+      userDto,
+    ]);
   });
 });
