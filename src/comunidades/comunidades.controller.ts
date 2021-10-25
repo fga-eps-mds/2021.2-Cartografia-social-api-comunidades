@@ -4,6 +4,7 @@ import { ComunidadesService } from './comunidades.service';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
 import { CommunityUserDto } from './dto/communityUser.dto';
 import { UpdateCommunityDto } from './dto/updateCommunity.dto';
+import { buffer } from 'stream/consumers';
 
 @Controller()
 export class ComunidadesController {
@@ -104,7 +105,9 @@ export class ComunidadesController {
 
   @MessagePattern('exportCommunityToKml')
   async exportCommunityToKml(@Payload() communityId: string) {
-    await this.comunidadesService.exportCommunityToKml(communityId);
-    return true;
+    const document = await this.comunidadesService.exportCommunityToKml(
+      communityId,
+    );
+    return Buffer.from(document).toString('base64');
   }
 }

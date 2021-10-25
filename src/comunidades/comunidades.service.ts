@@ -13,7 +13,7 @@ import {
   UserRelationDocument,
 } from './entities/userRelation.schema';
 
-import tokml from 'geojson-to-kml';
+import tokml = require('@maphubs/tokml');
 
 @Injectable()
 export class ComunidadesService {
@@ -242,7 +242,7 @@ export class ComunidadesService {
     return users;
   }
 
-  async exportCommunityToKml(communityId: string): Promise<boolean> {
+  async exportCommunityToKml(communityId: string) {
     const community = await this.getById(communityId);
 
     const kmlCommunityData = tokml(community, {
