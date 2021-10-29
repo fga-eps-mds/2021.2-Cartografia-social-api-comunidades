@@ -27,9 +27,8 @@ export class QuestionService {
 
     // verify regex
     for (const answer of surveyResponse.answers) {
-      const question = await this.questionModel.findOne({
-        id: answer.questionId,
-      });
+      const question = await this.questionModel.findById(answer.questionId);
+
       const regex = new RegExp(question.validationRegex);
       sentFields.add(question.id);
 
