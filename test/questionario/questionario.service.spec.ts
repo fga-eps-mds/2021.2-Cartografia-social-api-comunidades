@@ -81,9 +81,9 @@ describe('QuestionService', () => {
                 sort: () => result,
               };
             },
-            findOne: (data) => {
+            findById: (id) => {
               return defaultData.filter((element) => {
-                return element['id'] === data['id'];
+                return element['id'] === id;
               })[0];
             },
           },
@@ -104,10 +104,6 @@ describe('QuestionService', () => {
         {
           questionId: '1',
           response: 'Joao',
-        },
-        {
-          questionId: '2',
-          response: 'Ricardo',
         },
       ],
     };
