@@ -185,7 +185,7 @@ export class ComunidadesService {
     const user = await this.userModel.findOne({ email: userEmail });
 
     const userRelation = await this.userRelationModel.findOne({
-      userId: user._id,
+      userId: user._id.toString(),
     });
 
     if (!userRelation)
