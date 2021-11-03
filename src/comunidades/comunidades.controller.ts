@@ -102,8 +102,13 @@ export class ComunidadesController {
     return this.comunidadesService.getUsersWithouACommunity();
   }
 
-  @MessagePattern('exportCommunityDataToKml')
-  async exportCommunityDataToKml(@Payload() communityId: string) {
-    return this.comunidadesService.exportCommunityDataToKml(communityId);
+  @MessagePattern('exportCommunityAreaToKml')
+  async exportCommunityAreaToKml(@Payload() communityId: string) {
+    return this.comunidadesService.exportCommunityAreaToKml(communityId);
+  }
+
+  @MessagePattern('exportCommunityPointsToKml')
+  async exportCommunityPointsToKml(@Payload() communityId: string) {
+    return this.comunidadesService.exportCommunityPointsToKml(communityId);
   }
 }
