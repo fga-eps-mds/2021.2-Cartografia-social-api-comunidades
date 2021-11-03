@@ -397,4 +397,30 @@ export class ComunidadesService {
 
     return communityData;
   }
+
+  async exportCommunityPointsToKml(communityId: string) {
+    const communityData = await this.getPointByCommunityId(communityId);
+    const geoJsonData = [];
+
+    communityData.forEach((point) => {
+      geoJsonData.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: point.coordinates,
+        },
+        properties: {
+          name: point.title,
+        },
+      });
+    });
+
+    const geoJson = {
+      type: 'FeatureCollection',
+      features: geoJsonData,
+    };
+    const kmlCommunityData = tokml(geoJson);
+
+    return kmlCommunityData;
+  }
 }
