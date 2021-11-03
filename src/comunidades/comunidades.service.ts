@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { MicrosserviceException } from '../commons/exceptions/MicrosserviceException';
 import { CommunityUserDto } from './dto/communityUser.dto';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
@@ -14,6 +14,7 @@ import {
 } from './entities/userRelation.schema';
 
 import tokml = require('@maphubs/tokml');
+import { AreaDto } from './dto/areaCommunity.dto';
 
 @Injectable()
 export class ComunidadesService {
@@ -240,6 +241,70 @@ export class ComunidadesService {
       );
 
     return users;
+  }
+
+  async getAreaByCommunityId(commId: string) {
+    const communityData: AreaDto[] = await this.communityModel.aggregate([
+      {
+        $match: {
+          _id: Types.ObjectId(commId),
+        },
+      },
+      {
+        $addFields: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'communityrelations',
+          localField: 'id',
+          foreignField: 'communityId',
+          as: 'communityRelation',
+        },
+      },
+      {
+        $unwind: {
+          path: '$communityRelation',
+        },
+      },
+      {
+        $addFields: {
+          locationId: {
+            $toObjectId: '$communityRelation.locationId',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'areas',
+          localField: 'locationId',
+          foreignField: '_id',
+          as: 'areaCommunity',
+        },
+      },
+      {
+        $unwind: {
+          path: '$areaCommunity',
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: '$areaCommunity',
+        },
+      },
+    ]);
+
+    if (!communityData.length)
+      throw new MicrosserviceException(
+        'Dados insuficiente para esta comunidade!',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityData;
   }
 
   async exportCommunityToKml(communityId: string) {
