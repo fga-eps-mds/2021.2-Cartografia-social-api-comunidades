@@ -307,12 +307,28 @@ export class ComunidadesService {
     return communityData;
   }
 
-  async exportCommunityToKml(communityId: string) {
-    const community = await this.getById(communityId);
+  async exportCommunityDataToKml(communityId: string) {
+    const communityData = await this.getAreaByCommunityId(communityId);
+    const geoJsonData = [];
 
-    const kmlCommunityData = tokml(community, {
-      documentName: `KML-${community.name}`,
+    communityData.forEach((area) => {
+      geoJsonData.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: area.coordinates,
+        },
+        properties: {
+          name: area.title,
+        },
+      });
     });
+
+    const geoJson = {
+      type: 'FeatureCollection',
+      features: geoJsonData,
+    };
+    const kmlCommunityData = tokml(geoJson);
 
     return kmlCommunityData;
   }
