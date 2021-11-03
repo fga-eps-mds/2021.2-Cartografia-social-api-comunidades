@@ -15,6 +15,7 @@ import {
 
 import tokml = require('@maphubs/tokml');
 import { AreaDto } from './dto/areaCommunity.dto';
+import { PointDto } from './dto/pointCommunity.dto';
 
 @Injectable()
 export class ComunidadesService {
@@ -307,7 +308,7 @@ export class ComunidadesService {
     return communityData;
   }
 
-  async exportCommunityDataToKml(communityId: string) {
+  async exportCommunityAreaToKml(communityId: string) {
     const communityData = await this.getAreaByCommunityId(communityId);
     const geoJsonData = [];
 
@@ -331,5 +332,69 @@ export class ComunidadesService {
     const kmlCommunityData = tokml(geoJson);
 
     return kmlCommunityData;
+  }
+
+  async getPointByCommunityId(commId: string) {
+    const communityData: PointDto[] = await this.communityModel.aggregate([
+      {
+        $match: {
+          _id: Types.ObjectId(commId),
+        },
+      },
+      {
+        $addFields: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'communityrelations',
+          localField: 'id',
+          foreignField: 'communityId',
+          as: 'communityRelation',
+        },
+      },
+      {
+        $unwind: {
+          path: '$communityRelation',
+        },
+      },
+      {
+        $addFields: {
+          locationId: {
+            $toObjectId: '$communityRelation.locationId',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'points',
+          localField: 'locationId',
+          foreignField: '_id',
+          as: 'pointsCommunity',
+        },
+      },
+      {
+        $unwind: {
+          path: '$pointsCommunity',
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: '$pointsCommunity',
+        },
+      },
+    ]);
+
+    if (!communityData.length)
+      throw new MicrosserviceException(
+        'Dados insuficiente para esta comunidade!',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityData;
   }
 }
