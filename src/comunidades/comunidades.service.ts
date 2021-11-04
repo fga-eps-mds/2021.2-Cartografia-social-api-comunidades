@@ -185,13 +185,12 @@ export class ComunidadesService {
 
   async getUserCommunity(userEmail: string) {
     const user = await this.userModel.findOne({ email: userEmail });
-
     const userRelation = await this.userRelationModel.findOne({
       userId: user._id.toString(),
     });
 
     if (!userRelation)
-      throw new MicrosserviceException(
+    throw new MicrosserviceException(
         'Usuário não possui comunidade',
         HttpStatus.NOT_FOUND,
       );
