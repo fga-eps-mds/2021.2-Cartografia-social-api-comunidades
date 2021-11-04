@@ -8,7 +8,6 @@ import { UpdateCommunityDto } from './dto/updateCommunity.dto';
 import { UserDto } from './dto/user.dto';
 import { Community, CommunityDocument } from './entities/comunidade.schema';
 import { User, UserDocument } from './entities/user.schema';
-import { ObjectId, Types } from 'mongoose';
 import {
   UserRelation,
   UserRelationDocument,
