@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { MicrosserviceException } from '../commons/exceptions/MicrosserviceException';
 import { CommunityUserDto } from './dto/communityUser.dto';
 import { CreateCommunityDto } from './dto/createCommunity.dto';
@@ -12,6 +12,10 @@ import {
   UserRelation,
   UserRelationDocument,
 } from './entities/userRelation.schema';
+
+import tokml = require('@maphubs/tokml');
+import { AreaDto } from './dto/areaCommunity.dto';
+import { PointDto } from './dto/pointCommunity.dto';
 
 @Injectable()
 export class ComunidadesService {
@@ -237,5 +241,185 @@ export class ComunidadesService {
       );
 
     return users;
+  }
+
+  async getAreaByCommunityId(commId: string) {
+    const communityData: AreaDto[] = await this.communityModel.aggregate([
+      {
+        $match: {
+          _id: Types.ObjectId(commId),
+        },
+      },
+      {
+        $addFields: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'communityrelations',
+          localField: 'id',
+          foreignField: 'communityId',
+          as: 'communityRelation',
+        },
+      },
+      {
+        $unwind: {
+          path: '$communityRelation',
+        },
+      },
+      {
+        $addFields: {
+          locationId: {
+            $toObjectId: '$communityRelation.locationId',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'areas',
+          localField: 'locationId',
+          foreignField: '_id',
+          as: 'areaCommunity',
+        },
+      },
+      {
+        $unwind: {
+          path: '$areaCommunity',
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: '$areaCommunity',
+        },
+      },
+    ]);
+
+    if (!communityData.length)
+      throw new MicrosserviceException(
+        'Dados insuficiente para esta comunidade!',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityData;
+  }
+
+  async exportCommunityAreaToKml(communityId: string) {
+    const communityData = await this.getAreaByCommunityId(communityId);
+    const geoJsonData = [];
+
+    communityData.forEach((area) => {
+      geoJsonData.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: area.coordinates,
+        },
+        properties: {
+          name: area.title,
+        },
+      });
+    });
+
+    const geoJson = {
+      type: 'FeatureCollection',
+      features: geoJsonData,
+    };
+    const kmlCommunityData = tokml(geoJson);
+
+    return kmlCommunityData;
+  }
+
+  async getPointByCommunityId(commId: string) {
+    const communityData: PointDto[] = await this.communityModel.aggregate([
+      {
+        $match: {
+          _id: Types.ObjectId(commId),
+        },
+      },
+      {
+        $addFields: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'communityrelations',
+          localField: 'id',
+          foreignField: 'communityId',
+          as: 'communityRelation',
+        },
+      },
+      {
+        $unwind: {
+          path: '$communityRelation',
+        },
+      },
+      {
+        $addFields: {
+          locationId: {
+            $toObjectId: '$communityRelation.locationId',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'points',
+          localField: 'locationId',
+          foreignField: '_id',
+          as: 'pointsCommunity',
+        },
+      },
+      {
+        $unwind: {
+          path: '$pointsCommunity',
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: '$pointsCommunity',
+        },
+      },
+    ]);
+
+    if (!communityData.length)
+      throw new MicrosserviceException(
+        'Dados insuficiente para esta comunidade!',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return communityData;
+  }
+
+  async exportCommunityPointsToKml(communityId: string) {
+    const communityData = await this.getPointByCommunityId(communityId);
+    const geoJsonData = [];
+
+    communityData.forEach((point) => {
+      geoJsonData.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: point.coordinates,
+        },
+        properties: {
+          name: point.title,
+        },
+      });
+    });
+
+    const geoJson = {
+      type: 'FeatureCollection',
+      features: geoJsonData,
+    };
+    const kmlCommunityData = tokml(geoJson);
+
+    return kmlCommunityData;
   }
 }
