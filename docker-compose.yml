@@ -4,6 +4,7 @@ services:
     build: .
     volumes: 
       - .:/var/www/gateway
+      - /var/www/gateway/node_modules
     restart: always
     hostname: comunidade
     command: npm run start:debug
@@ -17,6 +18,7 @@ services:
     build: .
     volumes: 
       - .:/var/www/gateway
+      - /var/www/gateway/node_modules
     restart: always
     hostname: comunidade
     command: npm run start:dev
