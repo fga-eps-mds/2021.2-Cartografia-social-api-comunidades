@@ -1,4 +1,4 @@
-# 2021.1-Cartografia-social-api-comunidades
+# 2021.2-Cartografia-social-api-comunidades
 
 Repositório do microsserviço de comunidades do projeto da Cartografia social
 
