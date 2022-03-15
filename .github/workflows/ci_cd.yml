@@ -8,7 +8,8 @@ jobs:
     steps:
       - name: Copy repository
         uses: actions/checkout@v2
-
+        with:
+          fetch-depth: 0
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -23,21 +24,21 @@ jobs:
       - name: Run Tests & Coverage
         run: npm run test:cov
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   deploy-hom:
     runs-on: ubuntu-latest
     needs: ci
-    if: github.ref == 'refs/heads/develop' && github.event_name != 'pull_request'
+    if: (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') && github.event_name != 'pull_request'
 
     steps:
     - name: Deploy to Digital Ocean
@@ -47,27 +48,8 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-          cd projects/2021.1-Cartografia-social-api-comunidades
-          docker-compose -f deploy/hom/docker-compose.yml down
+          cd projects/2021.2-Cartografia-social-api-comunidades
+          docker-compose down
           git checkout develop
           git pull origin develop -f
-          docker-compose -f deploy/hom/docker-compose.yml -p comunidades up -d --build
-
-  deploy-prod:
-    runs-on: ubuntu-latest
-    needs: ci
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-
-    steps:
-    - name: Deploy to Digital Ocean
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST_PROD }}
-        username: ${{ secrets.SSH_USER_PROD }}
-        password: ${{ secrets.SSH_PASSWORD_PROD }}
-        script: |
-          cd projects/2021.1-Cartografia-social-api-comunidades
-          docker-compose -f deploy/prod/docker-compose.yml down
-          git checkout main
-          git pull origin main -f
-          docker-compose -f deploy/prod/docker-compose.yml -p comunidades up -d --build
+          docker-compose up -d --build comunidade-prod
