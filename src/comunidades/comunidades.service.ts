@@ -126,11 +126,19 @@ export class ComunidadesService {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
     await this.getCommunityUser(communityAdminUser);
+    
+    const communityId = communityAdminUser.communityId;
+
+    const listOfAdminUsers = await this.getAdminUsers(communityId);
 
     const relation = new this.userAdminRelationModel(communityAdminUser);
 
     try {
-      return await relation.save();
+      if(listOfAdminUsers.length >= 3) {
+        throw new MicrosserviceException("Reached the maximum number of admins (3) for this community.", HttpStatus.BAD_REQUEST);
+      } else {
+        return await relation.save();
+      }
     } catch (err) {
       throw new MicrosserviceException(err.message, HttpStatus.BAD_REQUEST);
     }
