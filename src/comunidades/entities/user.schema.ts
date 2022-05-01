@@ -17,6 +17,9 @@ export class User {
   @Prop()
   uid: string;
 
+  @Prop({ required: true })
+  password: string;
+
   @Prop({ required: true, unique: true })
   cellPhone: string;
 
@@ -28,6 +31,18 @@ export class User {
 
   @Prop({ enum: UserEnum, required: true })
   type: string;
+
+  @Prop({ required: true })
+  validated: boolean;
+
+  @Prop({ required: false })
+  role: string;
+
+  @Prop({ required: false })
+  affiliation: string;
+
+  @Prop({ required: false })
+  community: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
