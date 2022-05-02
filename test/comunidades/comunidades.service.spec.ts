@@ -6,6 +6,7 @@ import { MicrosserviceException } from '../../src/commons/exceptions/Microsservi
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 import { User } from '../../src/comunidades/entities/user.schema';
 import { UserDto } from '../../src/comunidades/dto/user.dto';
+import { MailSender } from '../../src/providers/mail/sender';
 
 describe('ComunidadesService', () => {
   let service: ComunidadesService;
@@ -19,6 +20,12 @@ describe('ComunidadesService', () => {
     return Test.createTestingModule({
       providers: [
         ComunidadesService,
+        {
+          provide: MailSender,
+          useValue: {
+            sendMail: jest.fn(),
+          },
+        },
         {
           provide: getModelToken(Community.name),
           useValue: fnCommunity,

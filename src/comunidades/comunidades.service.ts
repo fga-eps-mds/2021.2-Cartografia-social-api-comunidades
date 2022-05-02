@@ -437,18 +437,18 @@ export class ComunidadesService {
   }
 
   async exportCommunityKML(userEmail: string) {
-    const userCommunityId = await this.getUserCommunity(userEmail);
-    const areasKML = await this.exportCommunityAreaToKml(userCommunityId);
-    const pointsKML = await this.exportCommunityPointsToKml(userCommunityId);
-    const community = await this.getById(userCommunityId);
+    const userCommunity = await this.getUserCommunity(userEmail);
+    const communityId = userCommunity.id;
+    const areasKML = await this.exportCommunityAreaToKml(communityId);
+    const pointsKML = await this.exportCommunityPointsToKml(communityId);
 
     const files = [
       {
-        filename: `${community.name}-areas.kml`.replace(/\s/g, '_'),
+        filename: `${userCommunity.name}-areas.kml`.replace(/\s/g, '_'),
         content: Buffer.from(areasKML, 'utf-8'),
       },
       {
-        filename: `${community.name}-points.kml`.replace(/\s/g, '_'),
+        filename: `${userCommunity.name}-points.kml`.replace(/\s/g, '_'),
         content: Buffer.from(pointsKML, 'utf-8'),
       },
     ];
