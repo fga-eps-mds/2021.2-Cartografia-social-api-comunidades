@@ -9,6 +9,7 @@ import {
 } from './entities/userRelation.schema';
 import { User, UserSchema } from './entities/user.schema';
 import { MailSender } from 'src/providers/mail/sender';
+import { ConfigService } from 'src/config/configuration';
 
 @Module({
   imports: [
@@ -20,6 +21,13 @@ import { MailSender } from 'src/providers/mail/sender';
     ]),
   ],
   controllers: [ComunidadesController],
-  providers: [ComunidadesService, MailSender],
+  providers: [
+    ComunidadesService,
+    MailSender,
+    {
+      provide: 'CONFIG',
+      useClass: ConfigService,
+    },
+  ],
 })
 export class ComunidadesModule {}
