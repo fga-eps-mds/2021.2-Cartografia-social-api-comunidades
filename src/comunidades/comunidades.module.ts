@@ -8,6 +8,7 @@ import {
   UserRelationSchema,
 } from './entities/userRelation.schema';
 import { User, UserSchema } from './entities/user.schema';
+import { MailSender } from 'src/providers/mail/sender';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { User, UserSchema } from './entities/user.schema';
     ]),
   ],
   controllers: [ComunidadesController],
-  providers: [ComunidadesService],
+  providers: [ComunidadesService, MailSender],
 })
 export class ComunidadesModule {}
