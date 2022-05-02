@@ -6,6 +6,7 @@ import { ComunidadesService } from '../../src/comunidades/comunidades.service';
 import { UserRelation } from '../../src/comunidades/entities/userRelation.schema';
 import { User } from '../../src/comunidades/entities/user.schema';
 import { UserDto } from '../../src/comunidades/dto/user.dto';
+import { MailSender } from '../../src/providers/mail/sender';
 
 describe('ComunidadesController', () => {
   let controller: ComunidadesController;
@@ -13,6 +14,12 @@ describe('ComunidadesController', () => {
   const customModule = (fn: any) => {
     return Test.createTestingModule({
       providers: [
+        {
+          provide: MailSender,
+          useValue: {
+            sendMail: jest.fn(),
+          },
+        },
         {
           provide: ComunidadesService,
           useValue: fn,

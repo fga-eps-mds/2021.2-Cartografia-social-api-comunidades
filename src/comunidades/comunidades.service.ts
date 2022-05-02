@@ -16,6 +16,7 @@ import {
 import tokml = require('@maphubs/tokml');
 import { AreaDto } from './dto/areaCommunity.dto';
 import { PointDto } from './dto/pointCommunity.dto';
+import { MailSender } from '../providers/mail/sender';
 
 @Injectable()
 export class ComunidadesService {
@@ -28,6 +29,7 @@ export class ComunidadesService {
     private userAdminRelationModel: Model<UserRelationDocument>,
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
+    private mailInstance: MailSender,
   ) {}
 
   async create(communityData: CreateCommunityDto) {
@@ -126,7 +128,7 @@ export class ComunidadesService {
     // don't catch and rethrow exception here, as the intention is
     // to let it go back to the gateway
     await this.getCommunityUser(communityAdminUser);
-    
+
     const communityId = communityAdminUser.communityId;
 
     const listOfAdminUsers = await this.getAdminUsers(communityId);
@@ -134,8 +136,11 @@ export class ComunidadesService {
     const relation = new this.userAdminRelationModel(communityAdminUser);
 
     try {
-      if(listOfAdminUsers.length >= 3) {
-        throw new MicrosserviceException("Reached the maximum number of admins (3) for this community.", HttpStatus.BAD_REQUEST);
+      if (listOfAdminUsers.length >= 3) {
+        throw new MicrosserviceException(
+          'Reached the maximum number of admins (3) for this community.',
+          HttpStatus.BAD_REQUEST,
+        );
       } else {
         return await relation.save();
       }
@@ -198,7 +203,7 @@ export class ComunidadesService {
     });
 
     if (!userRelation)
-    throw new MicrosserviceException(
+      throw new MicrosserviceException(
         'Usuário não possui comunidade',
         HttpStatus.NOT_FOUND,
       );
@@ -429,5 +434,37 @@ export class ComunidadesService {
     const kmlCommunityData = tokml(geoJson);
 
     return kmlCommunityData;
+  }
+
+  async exportCommunityKML(userEmail: string) {
+    const userCommunity = await this.getUserCommunity(userEmail);
+    const communityId = userCommunity.id;
+    const areasKML = await this.exportCommunityAreaToKml(communityId);
+    const pointsKML = await this.exportCommunityPointsToKml(communityId);
+
+    const files = [
+      {
+        filename: `${userCommunity.name}-areas.kml`.replace(/\s/g, '_'),
+        content: Buffer.from(areasKML, 'utf-8'),
+      },
+      {
+        filename: `${userCommunity.name}-points.kml`.replace(/\s/g, '_'),
+        content: Buffer.from(pointsKML, 'utf-8'),
+      },
+    ];
+
+    const content = `<div tyle="font-size: 16px;">
+    <p>Nova exportação de dados requisitada.</p><br/>
+    <p>Os arquivos KML com os dados dos pontos e áreas estão em anexo.</p>
+    <p><b>Exportação requisitada por: </b>${userEmail}</p>
+    </div>`;
+
+    const subject = 'Exportação de marcações';
+
+    await this.mailInstance.sendMail(subject, content, files);
+
+    const result = { message: 'Data export successful' };
+
+    return result;
   }
 }
