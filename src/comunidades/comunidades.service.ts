@@ -215,7 +215,7 @@ export class ComunidadesService {
     const users: UserDto[] = await this.userModel.aggregate([
       {
         $match: {
-          type: 'COMMUNITY_MEMBER',
+          $or: [{ type: 'COMMUNITY_MEMBER' }, { type: 'RESEARCHER' }],
         },
       },
       {
