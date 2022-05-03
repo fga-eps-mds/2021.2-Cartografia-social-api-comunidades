@@ -47,9 +47,14 @@ export class ComunidadesService {
     const community = await this.getById(updateCommunity.id);
 
     if (updateCommunity.name) community.name = updateCommunity.name;
-    if (updateCommunity.description)
-      community.description = updateCommunity.description;
-    if (updateCommunity.imageUrl) community.imageUrl = updateCommunity.imageUrl;
+    if (updateCommunity.affiliation)
+      community.affiliation = updateCommunity.affiliation;
+    if (updateCommunity.association)
+      community.association = updateCommunity.association;
+    if (updateCommunity.county) community.county = updateCommunity.county;
+    if (updateCommunity.state) community.state = updateCommunity.state;
+    if (updateCommunity.institution)
+      community.institution = updateCommunity.institution;
 
     return community.save();
   }

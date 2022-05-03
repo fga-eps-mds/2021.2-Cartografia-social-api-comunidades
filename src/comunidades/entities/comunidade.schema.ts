@@ -8,11 +8,20 @@ export class Community {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  description: string;
+  @Prop()
+  affiliation?: string;
 
   @Prop()
-  imageUrl?: string;
+  association?: string;
+
+  @Prop()
+  county?: string;
+
+  @Prop()
+  state?: string;
+
+  @Prop()
+  institution?: string;
 }
 
 export const CommunitySchema = SchemaFactory.createForClass(Community);
