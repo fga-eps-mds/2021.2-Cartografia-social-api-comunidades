@@ -15,6 +15,9 @@ export class ConfigService {
       password: process.env.MAIL_PASSWORD,
       staffEmail: process.env.STAFF_EMAIL,
     };
+    this.envConfig.communityCreation = {
+      formURL: process.env.FORM_URL
+    };
   }
 
   get(key: string): any {

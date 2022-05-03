@@ -18,9 +18,14 @@ export class MailSender {
     });
   }
 
-  async sendMail(subject, content, attachments) {
+  async sendMail({
+    subject,
+    content,
+    attachments = [],
+    recipient = this.mailConfig.staffEmail,
+  }) {
     const mailOptions = {
-      to: this.mailConfig.staffEmail,
+      to: recipient,
       subject,
       html: content,
       attachments,

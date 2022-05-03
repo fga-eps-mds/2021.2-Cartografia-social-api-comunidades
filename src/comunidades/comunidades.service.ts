@@ -12,6 +12,7 @@ import {
   UserRelation,
   UserRelationDocument,
 } from './entities/userRelation.schema';
+import { ConfigService } from '../config/configuration';
 
 import tokml = require('@maphubs/tokml');
 import { AreaDto } from './dto/areaCommunity.dto';
@@ -461,9 +462,31 @@ export class ComunidadesService {
 
     const subject = 'Exportação de marcações';
 
-    await this.mailInstance.sendMail(subject, content, files);
+    await this.mailInstance.sendMail({ subject, content, attachments: files });
 
     const result = { message: 'Data export successful' };
+
+    return result;
+  }
+
+  async sendCreationEmail(userEmail: string) {
+    const formUrl = new ConfigService().get('communityCreation').formURL;
+
+    const content = `<div tyle="font-size: 16px;">
+    <p>Você solicitou a criação de uma comunidade no aplicativo!</p><br/>
+    <p>O próximo passo é preencher o formulário Abaixo. Logo após, você receberá uma resposta no email informado.</p>
+    <p><b>Link do formulário: </b>${formUrl}</p>
+    </div>`;
+
+    const subject = 'Nortear Cartografias';
+
+    await this.mailInstance.sendMail({
+      subject,
+      content,
+      recipient: userEmail,
+    });
+
+    const result = { message: 'Community creation email sent' };
 
     return result;
   }
