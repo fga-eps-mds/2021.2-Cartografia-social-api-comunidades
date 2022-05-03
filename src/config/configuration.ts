@@ -16,7 +16,7 @@ export class ConfigService {
       staffEmail: process.env.STAFF_EMAIL,
     };
     this.envConfig.communityCreation = {
-      formURL: process.env.FORM_URL
+      formURL: process.env.FORM_URL,
     };
   }
 

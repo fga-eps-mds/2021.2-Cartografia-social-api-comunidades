@@ -77,14 +77,10 @@ describe('ComunidadesService', () => {
     expect(
       await service.create({
         name: 'Por do sol',
-        description: 'Comunidade pôr do sol',
-        imageUrl: null,
       }),
     ).toStrictEqual({
       id,
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     });
   });
 
@@ -103,8 +99,6 @@ describe('ComunidadesService', () => {
     try {
       await service.create({
         name: 'Por do sol',
-        description: 'Comunidade pôr do sol',
-        imageUrl: null,
       });
     } catch (error) {
       expect(error.message).toBe('erro');
@@ -116,14 +110,10 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
       save: function () {
         return {
           id: this.id,
           name: this.name,
-          description: this.description,
-          imageUrl: this.imageUrl,
         };
       },
     };
@@ -141,14 +131,10 @@ describe('ComunidadesService', () => {
     expect(
       await service.update({
         id: '123',
-        imageUrl: 'http://image.url',
-        description: 'nova descrição',
       }),
     ).toStrictEqual({
       id: '123',
       name: 'Por do sol',
-      description: 'nova descrição',
-      imageUrl: 'http://image.url',
     });
   });
 
@@ -156,8 +142,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
 
     const module: TestingModule = await customModule(
@@ -195,8 +179,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
       delete: () => undefined,
     };
 
@@ -271,8 +253,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
 
     const userRelation = [
@@ -307,8 +287,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
 
     const userAdminRelation = [
@@ -343,8 +321,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
     const id = '321';
     const userDto = { userId: '1236', communityId: '123' };
@@ -376,8 +352,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
 
     const userDto = { userId: '1236', communityId: '123' };
@@ -406,8 +380,6 @@ describe('ComunidadesService', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
-      imageUrl: null,
     };
 
     const userDto = { userId: '1236', communityId: '123' };
