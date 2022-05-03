@@ -56,7 +56,6 @@ describe('ComunidadesController', () => {
   it('should create a community', async () => {
     const community: any = {
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
     };
 
     const module = await customModule({
@@ -71,7 +70,6 @@ describe('ComunidadesController', () => {
     expect(
       await controller.create({
         name: 'Por do sol',
-        description: 'Comunidade pôr do sol',
       }),
     ).toStrictEqual('123');
   });
@@ -80,7 +78,6 @@ describe('ComunidadesController', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
     };
 
     const module = await customModule({
@@ -93,7 +90,6 @@ describe('ComunidadesController', () => {
       await controller.update({
         id: '123',
         name: 'Por do sol',
-        description: 'Comunidade pôr do sol',
       }),
     ).toStrictEqual('123');
   });
@@ -102,7 +98,7 @@ describe('ComunidadesController', () => {
     const community = {
       id: '123',
       name: 'Por do sol',
-      description: 'Comunidade pôr do sol',
+
       toJSON: function () {
         return this;
       },
