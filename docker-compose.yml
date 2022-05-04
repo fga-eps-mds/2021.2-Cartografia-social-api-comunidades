@@ -4,6 +4,7 @@ services:
     build: .
     volumes: 
       - .:/var/www/gateway
+      - /var/www/gateway/node_modules
     restart: always
     hostname: comunidade
     command: npm run start:debug
@@ -17,12 +18,27 @@ services:
     build: .
     volumes: 
       - .:/var/www/gateway
+      - /var/www/gateway/node_modules
     restart: always
     hostname: comunidade
+    command: npm run start:dev
     env_file:
       - .env
     networks:
       - backend
+
+  comunidade-prod:
+    build: .
+    volumes: 
+      - .:/var/www/gateway
+      - /var/www/gateway/node_modules
+    restart: always
+    hostname: comunidade
+    command: npm run start:prod
+    env_file:
+      - .env
+    networks:
+      - backend      
       
 networks:
   backend:

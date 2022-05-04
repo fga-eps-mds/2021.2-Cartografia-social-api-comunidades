@@ -15,6 +15,11 @@ export class QuestionController {
 
   @MessagePattern('getQuestionsToCreateCommunity')
   async getQuestionsToCreateCommunity() {
-    return await this.questionService.getQuestionsToCreateCommunity();
+    return this.questionService.getQuestionsToCreateCommunity();
+  }
+
+  @MessagePattern('getQuestionsToGetHelp')
+  async getHelpQuestions() {
+    return this.questionService.getHelpQuestions();
   }
 }

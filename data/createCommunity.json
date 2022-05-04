@@ -1,0 +1,222 @@
+[
+    {
+        "question": "Nome da comunidade",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "validationRegex": "^.{1,}$",
+        "placeholder": "Insira o nome da comunidade...",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "1"
+    },
+    {
+        "question": "Município",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "validationRegex": "^.{1,}$",
+        "placeholder": "Município onde está a comunidade...",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "2"
+    },
+    {
+        "question": "Estado",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Estado onde está a comunidade...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "3"
+    },
+    {
+        "question": "Há quanto tempo a comunidade existe?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "4"
+    },
+    {
+        "question": "Quais são as características do território? (Localizado em área montanhosa? Área de floresta/plantação? É banhado por algum curso d’água? Alguma unidade de conservação?...)",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "5"
+    },
+    {
+        "question": "Qual é a área aproximada do território?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "6"
+    },
+    {
+        "question": "O que existe de infraestrutura na comunidade?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "7"
+    },
+    {
+        "question": "Quantas famílias vivem na comunidade?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "8"
+    },
+    {
+        "question": "Existe uma liderança tradicional?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "9"
+    },
+    {
+        "question": "Existe alguma organização representativa da comunidade? (associação, cooperativa, coletivo, movimento).",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "10"
+    },
+    {
+        "question": "Se sim, qual o nome da organização? Quando ela foi criada?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": true,
+        "orderInForm": "11"
+    },
+    {
+        "question": "Qual é o CNPJ da associação, caso seja registrada em cartório?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "XX.XXX.XXX/XXXX-XX",
+        "validationRegex": "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$",
+        "errorMessage": "Formato de CNPJ inválido (Formato esperado: XX.XXX.XXX/XXXX-XX)",
+        "optional": true,
+        "orderInForm": "12"
+    },
+    {
+        "question": "Quais são as formas de uso da terra/território?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "13"
+    },
+    {
+        "question": "Quais são as formas de produção?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "14"
+    },
+    {
+        "question": "Quais são as fontes de renda das famílias na comunidade?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "15"
+    },
+    {
+        "question": "Quais conflitos são enfrentados pela comunidade?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "16"
+    },
+    {
+        "question": "Desde quando os conflitos ocorrem?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": true,
+        "orderInForm": "17"
+    },
+    {
+        "question": "Há histórico de vítimas?",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "18"
+    },
+    {
+        "question": "Nome completo",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "19"
+    },
+    {
+        "question": "Telefone",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "(XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX",
+        "validationRegex": "^\\(?\\d{2}\\)?[\\s-]?[\\s9]?\\d{4}-?\\d{4}$",
+        "errorMessage": "Formato do telefone está inválido (Formato esperado: (XX) 9 XXXX-XXXX ou (XX) XXXX-XXXX)",
+        "optional": false,
+        "orderInForm": "20"
+    },
+    {
+        "question": "Email",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "email@email.com.br",
+        "validationRegex": "^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.([a-z]+)?$/i",
+        "errorMessage": "Email inválido",
+        "optional": false,
+        "orderInForm": "21"
+    },
+    {
+        "question": "Função na comunidade",
+        "formName": "createCommunity",
+        "fieldType": "textField",
+        "placeholder": "Digite sua resposta...",
+        "validationRegex": "^.{1,}$",
+        "errorMessage": "O campo não pode estar em branco",
+        "optional": false,
+        "orderInForm": "22"
+    }
+]
